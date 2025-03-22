@@ -110,7 +110,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 Assert.AreEqual(2, nodeCount);
 
-                BatchNodeRemoveContent content = new BatchNodeRemoveContent(new string[] { batchNodeID });
+                BatchNodeRemoveOptions content = new BatchNodeRemoveOptions(new string[] { batchNodeID });
                 Response response = await client.RemoveNodesAsync(poolID, content);
                 Assert.AreEqual(202, response.Status);
 
@@ -139,7 +139,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             try
             {
                 // create a pool to verify we have something to query for
-                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions();
+                BatchPoolCreateOptions batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions();
                 batchPoolCreateOptions.EnableAutoScale = true;
                 batchPoolCreateOptions.AutoScaleEvaluationInterval = evalInterval;
                 batchPoolCreateOptions.AutoScaleFormula = poolASFormulaOrig;
@@ -151,13 +151,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.AreEqual(autoScalePool.AutoScaleFormula, poolASFormulaOrig);
 
                 // evaluate autoscale formula
-                BatchPoolEvaluateAutoScaleContent batchPoolEvaluateAutoScaleContent = new BatchPoolEvaluateAutoScaleContent(poolASFormulaNew);
+                BatchPoolEvaluateAutoScaleOptions batchPoolEvaluateAutoScaleContent = new BatchPoolEvaluateAutoScaleOptions(poolASFormulaNew);
                 AutoScaleRun eval = await client.EvaluatePoolAutoScaleAsync(autoScalePool.Id, batchPoolEvaluateAutoScaleContent);
                 Assert.Null(eval.Error);
 
                 // change eval interval
                 TimeSpan newEvalInterval = evalInterval + TimeSpan.FromMinutes(1);
-                BatchPoolEnableAutoScaleContent batchPoolEnableAutoScaleContent = new BatchPoolEnableAutoScaleContent()
+                BatchPoolEnableAutoScaleOptions batchPoolEnableAutoScaleContent = new BatchPoolEnableAutoScaleOptions()
                 {
                     AutoScaleEvaluationInterval = newEvalInterval,
                     AutoScaleFormula = poolASFormulaNew,
@@ -192,7 +192,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             try
             {
                 // create a new pool
-                ImageReference imageReference = new ImageReference()
+                BatchImageReference imageReference = new BatchImageReference()
                 {
                     Publisher = "canonical",
                     Offer = "0001-com-ubuntu-server-jammy",
@@ -217,7 +217,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                         Caching = CachingType.ReadWrite,
                         ManagedDisk = new ManagedDisk()
                         {
-                            SecurityProfile = new VMDiskSecurityProfile()
+                            SecurityProfile = new VmDiskSecurityProfile()
                             {
                                 SecurityEncryptionType = SecurityEncryptionTypes.VMGuestStateOnly,
                             }
@@ -225,7 +225,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     }
                 };
 
-                BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(poolID, VMSize)
+                BatchPoolCreateOptions batchPoolCreateOptions = new BatchPoolCreateOptions(poolID, VMSize)
                 {
                     VirtualMachineConfiguration = virtualMachineConfiguration,
                     TargetDedicatedNodes = targetDedicatedNodes,
@@ -261,7 +261,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchPool resizePool = await iaasWindowsPoolFixture.CreatePoolAsync(0);
 
                 // verify exists
-                BatchPoolResizeContent resizeContent = new BatchPoolResizeContent()
+                BatchPoolResizeOptions resizeContent = new BatchPoolResizeOptions()
                 {
                     TargetDedicatedNodes = 1,
                     ResizeTimeout = TimeSpan.FromMinutes(10),
@@ -312,13 +312,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                     }
                 };
 
-                MetadataItem[] metadataIems = new MetadataItem[] {
-                    new MetadataItem("name", "value")
+                BatchMetadataItem[] metadataIems = new BatchMetadataItem[] {
+                    new BatchMetadataItem("name", "value")
                 };
 
                 BatchCertificateReference[] certificateReferences = new BatchCertificateReference[] { };
 
-                BatchPoolReplaceContent replaceContent = new BatchPoolReplaceContent(certificateReferences, batchApplicationPackageReferences, metadataIems);
+                BatchPoolReplaceOptions replaceContent = new BatchPoolReplaceOptions(certificateReferences, batchApplicationPackageReferences, metadataIems);
                 Response response = await client.ReplacePoolPropertiesAsync(poolID, replaceContent);
                 BatchPool replacePool = await client.GetPoolAsync(poolID);
                 Assert.AreEqual(replacePool.Metadata.First().Value, "value");
@@ -345,7 +345,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // update pool
 
-                BatchPoolUpdateContent updateContent = new BatchPoolUpdateContent();
+                BatchPoolUpdateOptions updateContent = new BatchPoolUpdateOptions();
 
                 updateContent.VmSize = "STANDARD_D2S_V3";
                 updateContent.TaskSlotsPerNode = 1;
@@ -361,7 +361,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     // verify pool got updated
                 };
 
-                updateContent.Metadata.Add(new MetadataItem("name", "value"));
+                updateContent.Metadata.Add(new BatchMetadataItem("name", "value"));
                 updateContent.ApplicationPackageReferences.Add(new BatchApplicationPackageReference("dotnotsdkbatchapplication1")
                 {
                     Version = "1"

@@ -43,7 +43,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 DoNotRunUntil = unboundDNRU,
             };
             // create a new pool
-            ImageReference imageReference = new ImageReference()
+            BatchImageReference imageReference = new BatchImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -68,7 +68,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             };
             BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo);
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions(jobScheduleId, schedule, jobSpecification);
 
             try
             {
@@ -108,7 +108,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
             ;
             // create a new pool
-            ImageReference imageReference = new ImageReference()
+            BatchImageReference imageReference = new BatchImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -138,7 +138,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 JobManagerTask = batchJobManagerTask,
             };
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions(jobScheduleId, schedule, jobSpecification);
 
             try
             {
@@ -180,7 +180,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 DoNotRunUntil = unboundDNRU,
             };
             // create a new pool
-            ImageReference imageReference = new ImageReference()
+            BatchImageReference imageReference = new BatchImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -205,7 +205,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             };
             BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo);
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions(jobScheduleId, schedule, jobSpecification);
 
             try
             {
@@ -237,7 +237,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 DoNotRunUntil = unboundDNRU,
             };
             // create a new pool
-            ImageReference imageReference = new ImageReference()
+            BatchImageReference imageReference = new BatchImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -262,14 +262,14 @@ namespace Azure.Compute.Batch.Tests.Integration
             };
             BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo);
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions(jobScheduleId, schedule, jobSpecification);
 
             try
             {
                 Response response = await client.CreateJobScheduleAsync(jobSchedule);
 
-                BatchJobScheduleUpdateContent batchJobScheduleUpdateContent = new BatchJobScheduleUpdateContent();
-                batchJobScheduleUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
+                BatchJobScheduleUpdateOptions batchJobScheduleUpdateContent = new BatchJobScheduleUpdateOptions();
+                batchJobScheduleUpdateContent.Metadata.Add(new BatchMetadataItem("name", "value"));
 
                 response = await client.UpdateJobScheduleAsync(jobScheduleId, batchJobScheduleUpdateContent);
                 Assert.AreEqual(200, response.Status);

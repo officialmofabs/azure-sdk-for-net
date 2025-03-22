@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsNotEmpty(batchNodeID);
 
                 // create new user
-                BatchNodeUserCreateContent user = new BatchNodeUserCreateContent(userName)
+                BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions(userName)
                 {
                     Password = userPassWord
                 };
@@ -89,7 +89,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsFalse(response.IsError);
 
                 // update users password
-                BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent()
+                BatchNodeUserUpdateOptions content = new BatchNodeUserUpdateOptions()
                 {
                     Password = updatedPassWord
                 };
@@ -195,7 +195,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             try
             {
                 // create a pool to verify we have something to query for
-                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
+                BatchPoolCreateOptions batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
                 VMExtension vMExtension = new VMExtension("CustomExtension", "Microsoft.Azure.Geneva", "GenevaMonitoring")
                 {
                     TypeHandlerVersion = "2.16",
@@ -243,7 +243,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
             try
             {
-                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
+                BatchPoolCreateOptions batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
                 batchPoolCreateOptions.UserAccounts.Add(new UserAccount("testuser", "Password1!"));
 
                 BatchPoolEndpointConfiguration batchPoolEndpointConfiguration = new BatchPoolEndpointConfiguration(new List<InboundNatPool>());
@@ -267,7 +267,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 BatchNodeRemoteLoginSettings batchNodeRemoteLoginSettings = await client.GetNodeRemoteLoginSettingsAsync(poolID, batchNodeID);
                 Assert.NotNull(batchNodeRemoteLoginSettings);
-                Assert.IsNotEmpty(batchNodeRemoteLoginSettings.RemoteLoginIpAddress);
+                Assert.NotNull(batchNodeRemoteLoginSettings.RemoteLoginIpAddress);
             }
             finally
             {
@@ -293,7 +293,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     batchNodeID = item.Id;
                 }
                 Assert.IsNotEmpty(batchNodeID);
-                BatchNodeDisableSchedulingContent batchNodeDisableSchedulingContent = new BatchNodeDisableSchedulingContent()
+                BatchNodeDisableSchedulingOptions batchNodeDisableSchedulingContent = new BatchNodeDisableSchedulingOptions()
                 {
                     NodeDisableSchedulingOption = BatchNodeDisableSchedulingOption.TaskCompletion,
                 };
@@ -303,7 +303,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 response = await client.EnableNodeSchedulingAsync(poolID, batchNodeID);
                 Assert.AreEqual(200, response.Status);
 
-                UploadBatchServiceLogsContent uploadBatchServiceLogsContent = new UploadBatchServiceLogsContent("http://contoso.com", DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
+                UploadBatchServiceLogsOptions uploadBatchServiceLogsContent = new UploadBatchServiceLogsOptions(new Uri("http://contoso.com"), DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
 
                 UploadBatchServiceLogsResult uploadBatchServiceLogsResult =  await client.UploadNodeLogsAsync(poolID, batchNodeID, uploadBatchServiceLogsContent);
                 Assert.NotNull(uploadBatchServiceLogsResult);
