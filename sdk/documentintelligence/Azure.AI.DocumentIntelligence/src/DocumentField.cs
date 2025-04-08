@@ -10,6 +10,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Dictionary of named field values. </summary>
         public DocumentFieldDictionary ValueDictionary { get; private set; }
 
+        /// <summary>
+        /// </summary>
+        public int ThisIsANewProperty { get; }
+
         private IReadOnlyDictionary<string, DocumentField> ValueObject
         {
             get => ValueDictionary.Source;
