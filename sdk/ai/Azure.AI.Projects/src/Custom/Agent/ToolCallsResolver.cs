@@ -79,7 +79,7 @@ namespace Azure.AI.Projects.Custom.Agent
         {
             if (type == typeof(string))
             {
-                return element.GetString() ?? "";
+                return element.GetString();
             }
             else if (type == typeof(int))
             {
