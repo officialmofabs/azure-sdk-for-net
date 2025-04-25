@@ -94,23 +94,15 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
         {
             if (functionName == getUserFavoriteCityTool.Name)
             {
-                return new ToolOutput(toolCallId, GetUserFavoriteCity());
+                return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetUserFavoriteCity, functionArguments).ToString());
             }
-            using JsonDocument argumentsJson = JsonDocument.Parse(functionArguments);
             if (functionName == getCityNicknameTool.Name)
             {
-                string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-                return new ToolOutput(toolCallId, GetCityNickname(locationArgument));
+                return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetCityNickname, functionArguments).ToString());
             }
             if (functionName == getCurrentWeatherAtLocationTool.Name)
             {
-                string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-                if (argumentsJson.RootElement.TryGetProperty("unit", out JsonElement unitElement))
-                {
-                    string unitArgument = unitElement.GetString();
-                    return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument, unitArgument));
-                }
-                return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument));
+                return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetWeatherAtLocation, functionArguments).ToString());
             }
             return null;
         }
@@ -197,23 +189,15 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
         {
             if (functionName == getUserFavoriteCityTool.Name)
             {
-                return new ToolOutput(toolCallId, GetUserFavoriteCity());
+                return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetUserFavoriteCity, functionArguments).ToString());
             }
-            using JsonDocument argumentsJson = JsonDocument.Parse(functionArguments);
             if (functionName == getCityNicknameTool.Name)
             {
-                string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-                return new ToolOutput(toolCallId, GetCityNickname(locationArgument));
+                return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetCityNickname, functionArguments).ToString());
             }
             if (functionName == getCurrentWeatherAtLocationTool.Name)
             {
-                string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-                if (argumentsJson.RootElement.TryGetProperty("unit", out JsonElement unitElement))
-                {
-                    string unitArgument = unitElement.GetString();
-                    return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument, unitArgument));
-                }
-                return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument));
+                return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetWeatherAtLocation, functionArguments).ToString());
             }
             return null;
         }

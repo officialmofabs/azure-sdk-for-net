@@ -2953,6 +2953,11 @@ namespace Azure.AI.Projects
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
         public Azure.AI.Projects.ToolResources ToolResources { get { throw null; } }
     }
+    public partial class ToolCallsResolver
+    {
+        internal ToolCallsResolver() { }
+        public static object Resolve(System.Delegate function, string functionArguments) { throw null; }
+    }
     public partial class ToolConnection : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ToolConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ToolConnection>
     {
         public ToolConnection(string connectionId) { }
@@ -3569,14 +3574,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.WorkspaceProperties System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WorkspaceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WorkspaceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WorkspaceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Azure.AI.Projects.Custom.Agent
-{
-    public partial class ToolCallsResolver
-    {
-        internal ToolCallsResolver() { }
-        public static object Resolve(System.Delegate function, string functionArguments) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

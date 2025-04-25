@@ -10,7 +10,6 @@ using System.Net.ServerSentEvents;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Custom.Agent;
 using Microsoft.VisualBasic;
 
 #nullable enable

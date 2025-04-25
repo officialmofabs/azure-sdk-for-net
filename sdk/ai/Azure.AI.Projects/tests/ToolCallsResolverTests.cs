@@ -5,7 +5,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Custom.Agent;
 
 namespace Azure.AI.Projects.Tests
 {

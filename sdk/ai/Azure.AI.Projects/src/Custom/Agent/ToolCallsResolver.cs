@@ -5,9 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
-using System.Xml.Linq;
 
-namespace Azure.AI.Projects.Custom.Agent
+namespace Azure.AI.Projects
 {
     /// <summary>
     /// ToolCallsResolver is used to resolve tool calls in the streaming API.
