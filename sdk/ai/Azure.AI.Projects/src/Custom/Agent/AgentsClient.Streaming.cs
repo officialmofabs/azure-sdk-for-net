@@ -91,7 +91,7 @@ public partial class AgentsClient
         async Task<Response<ThreadRun>> cancelRunAsync(string runId) => await this.CancelRunAsync(threadId, runId).ConfigureAwait(false);
         return new AsyncStreamingUpdateCollection(
             cancellationToken,
-            _autoFUnctionCallDelegates,
+            _autoFunctionCallDelegates,
             _maxRetry,
             0,
             sendRequestAsync,
@@ -176,7 +176,7 @@ public partial class AgentsClient
 
         return new StreamingUpdateCollection(
             cancellationToken,
-            _autoFUnctionCallDelegates,
+            _autoFunctionCallDelegates,
             _maxRetry,
             0,
             sendRequest,
@@ -218,7 +218,7 @@ public partial class AgentsClient
 
         return new StreamingUpdateCollection(
             cancellationToken,
-            _autoFUnctionCallDelegates,
+            _autoFunctionCallDelegates,
             _maxRetry,
             currentRetry,
             sendRequest,
@@ -260,7 +260,7 @@ public partial class AgentsClient
 
         return new AsyncStreamingUpdateCollection(
             cancellationToken,
-            _autoFUnctionCallDelegates,
+            _autoFunctionCallDelegates,
             _maxRetry,
             currentRetry,
             sendRequestAsync,

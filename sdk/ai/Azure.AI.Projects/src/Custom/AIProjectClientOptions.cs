@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
     /// <summary> Client options for AIProjectClient. </summary>
     public partial class AIProjectClientOptions : ClientOptions
     {
-        private Dictionary<string, Delegate> _autoFUnctionCallDelegates = new();
+        private Dictionary<string, Delegate> _autoFunctionCallDelegates = new();
         private int _maxRetry;
         /// <summary> The size of the client cache. </summary>
         public int ClientCacheSize { get; set; } = 100;
@@ -23,11 +23,11 @@ namespace Azure.AI.Projects
         public virtual void EnableAutoFunctionCalls(Dictionary<string, Delegate> delegates, int maxRetry = 10)
         {
             ValidateAutoFunctions(delegates);
-            _autoFUnctionCallDelegates.Clear();
+            _autoFunctionCallDelegates.Clear();
 
             foreach (var kvp in delegates)
             {
-                _autoFUnctionCallDelegates[kvp.Key] = kvp.Value;
+                _autoFunctionCallDelegates[kvp.Key] = kvp.Value;
             }
             _maxRetry = maxRetry;
         }
@@ -47,20 +47,8 @@ namespace Azure.AI.Projects
             }
         }
 
-        internal Dictionary<string, Delegate> AutoFunctionCallDelegates
-        {
-            get
-            {
-                return _autoFUnctionCallDelegates;
-            }
-        }
+        internal Dictionary<string, Delegate> AutoFunctionCallDelegates => _autoFunctionCallDelegates;
 
-        internal int MaxRetry
-        {
-            get
-            {
-                return _maxRetry;
-            }
-        }
+        internal int MaxRetry => _maxRetry;
     }
 }
