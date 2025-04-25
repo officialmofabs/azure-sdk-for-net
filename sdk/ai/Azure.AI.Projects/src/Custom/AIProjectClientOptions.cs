@@ -22,16 +22,29 @@ namespace Azure.AI.Projects
         /// <param name="maxRetry">Maximum number of errors allowed and retry per stream. Default value is 10.</param>
         public virtual void EnableAutoFunctionCalls(Dictionary<string, Delegate> delegates, int maxRetry = 10)
         {
+            ValidateAutoFunctions(delegates);
             _autoFUnctionCallDelegates.Clear();
 
-            if (delegates != null)
+            foreach (var kvp in delegates)
             {
-                foreach (var kvp in delegates)
-                {
-                    _autoFUnctionCallDelegates[kvp.Key] = kvp.Value;
-                }
+                _autoFUnctionCallDelegates[kvp.Key] = kvp.Value;
             }
             _maxRetry = maxRetry;
+        }
+
+        private void ValidateAutoFunctions(Dictionary<string, Delegate> delegates)
+        {
+            if (delegates == null || delegates.Count == 0)
+            {
+                throw new InvalidOperationException("The delegate dictionary must have at least one delegate.");
+            }
+            foreach (var kvp in delegates)
+            {
+                if (kvp.Value.Method.ReturnType != typeof(string))
+                {
+                    throw new InvalidOperationException($"The Delegates must have string as return type.");
+                }
+            }
         }
 
         internal Dictionary<string, Delegate> AutoFunctionCallDelegates
