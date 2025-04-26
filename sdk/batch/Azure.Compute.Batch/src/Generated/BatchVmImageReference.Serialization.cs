@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchImageReference : IUtf8JsonSerializable, IJsonModel<BatchImageReference>
+    public partial class BatchVmImageReference : IUtf8JsonSerializable, IJsonModel<BatchVmImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchImageReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchVmImageReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BatchImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchVmImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchImageReference)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchVmImageReference)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Publisher))
@@ -91,19 +91,19 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchImageReference IJsonModel<BatchImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchVmImageReference IJsonModel<BatchVmImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchImageReference)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchVmImageReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchImageReference(document.RootElement, options);
+            return DeserializeBatchVmImageReference(document.RootElement, options);
         }
 
-        internal static BatchImageReference DeserializeBatchImageReference(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchVmImageReference DeserializeBatchVmImageReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -173,7 +173,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchImageReference(
+            return new BatchVmImageReference(
                 publisher,
                 offer,
                 sku,
@@ -185,43 +185,43 @@ namespace Azure.Compute.Batch
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BatchImageReference>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchVmImageReference>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmImageReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchImageReference)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchVmImageReference)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BatchImageReference IPersistableModel<BatchImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchVmImageReference IPersistableModel<BatchVmImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmImageReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBatchImageReference(document.RootElement, options);
+                        return DeserializeBatchVmImageReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchImageReference)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchVmImageReference)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BatchImageReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchVmImageReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchImageReference FromResponse(Response response)
+        internal static BatchVmImageReference FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchImageReference(document.RootElement);
+            return DeserializeBatchVmImageReference(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

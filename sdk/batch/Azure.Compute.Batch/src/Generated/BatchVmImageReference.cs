@@ -16,7 +16,7 @@ namespace Azure.Compute.Batch
     /// To get the list of all Azure Marketplace Image references verified by Azure Batch, see the
     /// ' List Supported Images ' operation.
     /// </summary>
-    public partial class BatchImageReference
+    public partial class BatchVmImageReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,12 +50,12 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchImageReference"/>. </summary>
-        public BatchImageReference()
+        /// <summary> Initializes a new instance of <see cref="BatchVmImageReference"/>. </summary>
+        public BatchVmImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmImageReference"/>. </summary>
         /// <param name="publisher"> The publisher of the Azure Virtual Machines Marketplace Image. For example, Canonical or MicrosoftWindowsServer. </param>
         /// <param name="offer"> The offer type of the Azure Virtual Machines Marketplace Image. For example, UbuntuServer or WindowsServer. </param>
         /// <param name="sku"> The SKU of the Azure Virtual Machines Marketplace Image. For example, 18.04-LTS or 2019-Datacenter. </param>
@@ -65,7 +65,7 @@ namespace Azure.Compute.Batch
         /// <param name="sharedGalleryImageId"> The shared gallery image unique identifier. This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call. </param>
         /// <param name="communityGalleryImageId"> The community gallery image unique identifier. This property is mutually exclusive with other properties and can be fetched from community gallery image GET call. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchImageReference(string publisher, string offer, string sku, string version, ResourceIdentifier virtualMachineImageId, string exactVersion, string sharedGalleryImageId, string communityGalleryImageId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchVmImageReference(string publisher, string offer, string sku, string version, ResourceIdentifier virtualMachineImageId, string exactVersion, string sharedGalleryImageId, string communityGalleryImageId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Publisher = publisher;
             Offer = offer;

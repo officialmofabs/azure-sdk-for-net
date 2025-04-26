@@ -96,12 +96,20 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // disable a job
                 BatchJobDisableOptions content = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
-                response = await client.DisableJobAsync(jobID, content);
-                Assert.IsFalse(response.IsError);
+                DisableJobOperation jobOperation = await client.DisableJobAsync(jobID, content);
+                await jobOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                Assert.IsTrue(jobOperation.HasCompleted);
+                Assert.IsTrue(jobOperation.HasValue);
+                Assert.AreEqual(jobOperation.Value.State, BatchJobState.Disabled);
+                Assert.IsFalse(jobOperation.GetRawResponse().IsError);
 
                 // enable a job
-                response = await client.EnableJobAsync(jobID);
-                Assert.IsFalse(response.IsError);
+                EnableJobOperation enableJobOperation = await client.EnableJobAsync(jobID);
+                await enableJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                Assert.IsTrue(enableJobOperation.HasCompleted);
+                Assert.IsTrue(enableJobOperation.HasValue);
+                Assert.AreEqual(enableJobOperation.Value.State, BatchJobState.Active);
+                Assert.IsFalse(enableJobOperation.GetRawResponse().IsError);
 
                 await WaitForTasksToComplete(client, jobID, IsPlayBack());
 
@@ -118,8 +126,10 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     TerminationReason = "<terminateReason>",
                 };
-                response = await client.TerminateJobAsync(jobID, parameters, force: true);
-                Assert.IsFalse(response.IsError);
+                TerminateJobOperation terminateJobOperation = await client.TerminateJobAsync(jobID, parameters, force: true);
+                await terminateJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                Assert.IsTrue(terminateJobOperation.HasCompleted);
+                Assert.IsTrue(terminateJobOperation.HasValue);
             }
             finally
             {
@@ -222,6 +232,73 @@ namespace Azure.Compute.Batch.Tests.Integration
             {
                 await client.DeletePoolAsync(poolID);
                 await client.DeleteJobAsync(jobID);
+            }
+        }
+
+        [RecordedTest]
+        public async Task DeleteJob()
+        {
+            var client = CreateBatchClient();
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "DeleteJob", IsPlayBack());
+            string poolID = iaasWindowsPoolFixture.PoolId;
+            string jobID = "deleteJob";
+            string commandLine = "cmd /c echo Hello World";
+            string taskID = "Task1";
+            int taskCount = 20000;
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
+
+                BatchPoolInfo batchPoolInfo = new BatchPoolInfo()
+                {
+                    PoolId = pool.Id
+                };
+                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo)
+                {
+                    JobPreparationTask = new BatchJobPreparationTask(commandLine),
+                    JobReleaseTask = new BatchJobReleaseTask(commandLine),
+                };
+                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                Assert.AreEqual(201, response.Status);
+
+                List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+                for (int i = 0; i < taskCount; i++)
+                {
+                    tasks.Add(new BatchTaskCreateOptions($"{taskID}_{i}", commandLine));
+                }
+                CreateTasksOptions createTaskOptions = new CreateTasksOptions()
+                {
+                    MaxTimeBetweenCallsInSeconds = IsPlayBack() ? 0 : 30,
+                    ReturnBatchTaskCreateResults = true,
+                };
+
+                CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks, createTaskOptions);
+                Assert.IsNotNull(taskResult);
+                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
+
+                // get the job
+                BatchJob job = await client.GetJobAsync(jobID);
+                Assert.AreEqual(BatchJobState.Active, job.State);
+
+                DeleteJobOperation operation = await client.DeleteJobAsync(jobID, force: true);
+
+                Assert.IsNotNull(operation);
+
+                await operation.WaitForCompletionAsync().ConfigureAwait(false);
+
+                Assert.IsTrue(operation.HasCompleted);
+                Assert.IsTrue(operation.HasValue);
+                Assert.IsTrue(operation.Value);
+
+                DeleteJobOperation operation2 = new DeleteJobOperation(client, operation.Id);
+                await operation2.WaitForCompletionAsync().ConfigureAwait(false);
+                Assert.IsTrue(operation2.HasValue);
+                Assert.IsTrue(operation2.HasCompleted);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
             }
         }
     }

@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class PublicIpAddressConfiguration : IUtf8JsonSerializable, IJsonModel<PublicIpAddressConfiguration>
+    public partial class BatchPublicIpAddressConfiguration : IUtf8JsonSerializable, IJsonModel<BatchPublicIpAddressConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicIpAddressConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPublicIpAddressConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PublicIpAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchPublicIpAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchPublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIpAddressConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchPublicIpAddressConfiguration)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(IpAddressProvisioningType))
@@ -72,19 +72,19 @@ namespace Azure.Compute.Batch
             }
         }
 
-        PublicIpAddressConfiguration IJsonModel<PublicIpAddressConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchPublicIpAddressConfiguration IJsonModel<BatchPublicIpAddressConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchPublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIpAddressConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchPublicIpAddressConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePublicIpAddressConfiguration(document.RootElement, options);
+            return DeserializeBatchPublicIpAddressConfiguration(document.RootElement, options);
         }
 
-        internal static PublicIpAddressConfiguration DeserializePublicIpAddressConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchPublicIpAddressConfiguration DeserializeBatchPublicIpAddressConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -134,46 +134,46 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PublicIpAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
+            return new BatchPublicIpAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PublicIpAddressConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchPublicIpAddressConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchPublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PublicIpAddressConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchPublicIpAddressConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PublicIpAddressConfiguration IPersistableModel<PublicIpAddressConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchPublicIpAddressConfiguration IPersistableModel<BatchPublicIpAddressConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchPublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePublicIpAddressConfiguration(document.RootElement, options);
+                        return DeserializeBatchPublicIpAddressConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublicIpAddressConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchPublicIpAddressConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PublicIpAddressConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchPublicIpAddressConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PublicIpAddressConfiguration FromResponse(Response response)
+        internal static BatchPublicIpAddressConfiguration FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePublicIpAddressConfiguration(document.RootElement);
+            return DeserializeBatchPublicIpAddressConfiguration(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

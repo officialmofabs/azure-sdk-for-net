@@ -14,7 +14,7 @@ namespace Azure.Compute.Batch
     /// Specifies the ephemeral Disk Settings for the operating system disk used by the
     /// compute node (VM).
     /// </summary>
-    public partial class DiffDiskSettings
+    public partial class BatchDiffDiskSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,15 +48,15 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiffDiskSettings"/>. </summary>
-        public DiffDiskSettings()
+        /// <summary> Initializes a new instance of <see cref="BatchDiffDiskSettings"/>. </summary>
+        public BatchDiffDiskSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiffDiskSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchDiffDiskSettings"/>. </summary>
         /// <param name="placement"> Specifies the ephemeral disk placement for operating system disk for all VMs in the pool. This property can be used by user in the request to choose the location e.g., cache disk space for Ephemeral OS disk provisioning. For more information on Ephemeral OS disk size requirements, please refer to Ephemeral OS disk size requirements for Windows VMs at https://learn.microsoft.com/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VMs at https://learn.microsoft.com/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiffDiskSettings(DiffDiskPlacement? placement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchDiffDiskSettings(DiffDiskPlacement? placement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Placement = placement;
             _serializedAdditionalRawData = serializedAdditionalRawData;

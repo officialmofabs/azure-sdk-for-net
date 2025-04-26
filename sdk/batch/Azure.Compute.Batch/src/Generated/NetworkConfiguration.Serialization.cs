@@ -99,7 +99,7 @@ namespace Azure.Compute.Batch
             string subnetId = default;
             DynamicVNetAssignmentScope? dynamicVNetAssignmentScope = default;
             BatchPoolEndpointConfiguration endpointConfiguration = default;
-            PublicIpAddressConfiguration publicIPAddressConfiguration = default;
+            BatchPublicIpAddressConfiguration publicIPAddressConfiguration = default;
             bool? enableAcceleratedNetworking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    publicIPAddressConfiguration = PublicIpAddressConfiguration.DeserializePublicIpAddressConfiguration(property.Value, options);
+                    publicIPAddressConfiguration = BatchPublicIpAddressConfiguration.DeserializeBatchPublicIpAddressConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableAcceleratedNetworking"u8))

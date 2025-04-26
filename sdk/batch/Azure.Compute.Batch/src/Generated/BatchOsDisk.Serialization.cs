@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class OSDisk : IUtf8JsonSerializable, IJsonModel<OSDisk>
+    public partial class BatchOsDisk : IUtf8JsonSerializable, IJsonModel<BatchOsDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchOsDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OSDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchOsDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OSDisk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchOsDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSDisk)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchOsDisk)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(EphemeralOSDiskSettings))
@@ -76,19 +76,19 @@ namespace Azure.Compute.Batch
             }
         }
 
-        OSDisk IJsonModel<OSDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchOsDisk IJsonModel<BatchOsDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OSDisk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchOsDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSDisk)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchOsDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOSDisk(document.RootElement, options);
+            return DeserializeBatchOsDisk(document.RootElement, options);
         }
 
-        internal static OSDisk DeserializeOSDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchOsDisk DeserializeBatchOsDisk(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,7 +96,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            DiffDiskSettings ephemeralOSDiskSettings = default;
+            BatchDiffDiskSettings ephemeralOSDiskSettings = default;
             CachingType? caching = default;
             int? diskSizeGB = default;
             ManagedDisk managedDisk = default;
@@ -111,7 +111,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    ephemeralOSDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value, options);
+                    ephemeralOSDiskSettings = BatchDiffDiskSettings.DeserializeBatchDiffDiskSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("caching"u8))
@@ -156,7 +156,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OSDisk(
+            return new BatchOsDisk(
                 ephemeralOSDiskSettings,
                 caching,
                 diskSizeGB,
@@ -165,43 +165,43 @@ namespace Azure.Compute.Batch
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OSDisk>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchOsDisk>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OSDisk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchOsDisk>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSDisk)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchOsDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OSDisk IPersistableModel<OSDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchOsDisk IPersistableModel<BatchOsDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OSDisk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchOsDisk>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOSDisk(document.RootElement, options);
+                        return DeserializeBatchOsDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSDisk)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchOsDisk)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OSDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchOsDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OSDisk FromResponse(Response response)
+        internal static BatchOsDisk FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOSDisk(document.RootElement);
+            return DeserializeBatchOsDisk(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

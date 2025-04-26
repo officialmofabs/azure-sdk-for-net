@@ -65,7 +65,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool01", "Standard_D1_v2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
@@ -88,7 +88,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -136,16 +136,16 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "standard_d2s_v3")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
         Sku = "20_04-lts",
     }, "batch.node.ubuntu 20.04")
     {
-        OsDisk = new OSDisk
+        OsDisk = new BatchOsDisk
         {
-            EphemeralOSDiskSettings = new DiffDiskSettings
+            EphemeralOSDiskSettings = new BatchDiffDiskSettings
             {
                 Placement = DiffDiskPlacement.CacheDisk,
             },
@@ -173,7 +173,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -197,7 +197,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -205,7 +205,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_
         Version = "latest",
     }, "batch.node.ubuntu 18.04")
     {
-        SecurityProfile = new SecurityProfile(true, SecurityTypes.TrustedLaunch, new UefiSettings
+        SecurityProfile = new SecurityProfile(true, SecurityTypes.TrustedLaunch, new BatchUefiSettings
         {
             SecureBootEnabled = false,
         }),
@@ -222,7 +222,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
@@ -247,7 +247,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
@@ -276,7 +276,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
@@ -315,7 +315,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_A1_v2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
@@ -344,7 +344,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool01", "Standard_D1_v2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
@@ -367,7 +367,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -415,16 +415,16 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "standard_d2s_v3")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
         Sku = "20_04-lts",
     }, "batch.node.ubuntu 20.04")
     {
-        OsDisk = new OSDisk
+        OsDisk = new BatchOsDisk
         {
-            EphemeralOSDiskSettings = new DiffDiskSettings
+            EphemeralOSDiskSettings = new BatchDiffDiskSettings
             {
                 Placement = DiffDiskPlacement.CacheDisk,
             },
@@ -452,7 +452,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -476,7 +476,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -484,7 +484,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_
         Version = "latest",
     }, "batch.node.ubuntu 18.04")
     {
-        SecurityProfile = new SecurityProfile(true, SecurityTypes.TrustedLaunch, new UefiSettings
+        SecurityProfile = new SecurityProfile(true, SecurityTypes.TrustedLaunch, new BatchUefiSettings
         {
             SecureBootEnabled = false,
         }),
@@ -501,7 +501,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
@@ -526,7 +526,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
@@ -555,7 +555,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
@@ -594,7 +594,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_A1_v2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
@@ -1421,32 +1421,6 @@ Response response = client.CreatePool(content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeletePoolAsync(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call DeletePoolAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.DeletePoolAsync("poolId");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="DeletePool(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call DeletePool.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.DeletePool("poolId");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
     <member name="GetPoolAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetPoolAsync.
@@ -2117,32 +2091,6 @@ Response response = client.RemoveNodes("poolId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteJobAsync(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call DeleteJobAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.DeleteJobAsync("jobId");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="DeleteJob(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call DeleteJob.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.DeleteJob("jobId");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
     <member name="GetJobAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetJobAsync.
@@ -2343,140 +2291,6 @@ Response response = client.ReplaceJob("jobId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DisableJobAsync(string,BatchJobDisableOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)">
-      <example>
-This sample shows how to call DisableJobAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-BatchJobDisableOptions content = new BatchJobDisableOptions(DisableBatchJobOption.Terminate);
-Response response = await client.DisableJobAsync("jobId", content);
-]]></code></example>
-    </member>
-    <member name="DisableJob(string,BatchJobDisableOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)">
-      <example>
-This sample shows how to call DisableJob.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-BatchJobDisableOptions content = new BatchJobDisableOptions(DisableBatchJobOption.Terminate);
-Response response = client.DisableJob("jobId", content);
-]]></code></example>
-    </member>
-    <member name="DisableJobAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call DisableJobAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    disableTasks = "terminate",
-});
-Response response = await client.DisableJobAsync("jobId", content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="DisableJob(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call DisableJob.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    disableTasks = "terminate",
-});
-Response response = client.DisableJob("jobId", content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="EnableJobAsync(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call EnableJobAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.EnableJobAsync("jobId");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="EnableJob(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call EnableJob.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.EnableJob("jobId");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="TerminateJobAsync(string,BatchJobTerminateOptions,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)">
-      <example>
-This sample shows how to call TerminateJobAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.TerminateJobAsync("jobId");
-]]></code></example>
-    </member>
-    <member name="TerminateJob(string,BatchJobTerminateOptions,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)">
-      <example>
-This sample shows how to call TerminateJob.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.TerminateJob("jobId");
-]]></code></example>
-    </member>
-    <member name="TerminateJobAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call TerminateJobAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = null;
-Response response = await client.TerminateJobAsync("jobId", content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="TerminateJob(string,RequestContent,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call TerminateJob.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = null;
-Response response = client.TerminateJob("jobId", content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
     <member name="CreateJobAsync(BatchJobCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateJobAsync.
@@ -2507,7 +2321,7 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
         AutoPoolIdPrefix = "mypool",
         Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
-            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -2639,7 +2453,7 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
         AutoPoolIdPrefix = "mypool",
         Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
-            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -3283,32 +3097,6 @@ Response response = client.CancelCertificateDeletion("sha1", "0123456789abcdef01
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteCertificateAsync(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call DeleteCertificateAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.DeleteCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="DeleteCertificate(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call DeleteCertificate.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.DeleteCertificate("sha1", "0123456789abcdef0123456789abcdef01234567");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
     <member name="GetCertificateAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetCertificateAsync.
@@ -3361,32 +3149,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("thumbprint").ToString());
 Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
 Console.WriteLine(result.GetProperty("data").ToString());
-]]></code></example>
-    </member>
-    <member name="DeleteJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call DeleteJobScheduleAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.DeleteJobScheduleAsync("jobScheduleId");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="DeleteJobSchedule(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call DeleteJobSchedule.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.DeleteJobSchedule("jobScheduleId");
-
-Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
     <member name="GetJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
@@ -3687,32 +3449,6 @@ Response response = client.EnableJobSchedule("jobScheduleId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="TerminateJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call TerminateJobScheduleAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.TerminateJobScheduleAsync("jobScheduleId");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="TerminateJobSchedule(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call TerminateJobSchedule.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.TerminateJobSchedule("jobScheduleId");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
     <member name="CreateJobScheduleAsync(BatchJobScheduleCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateJobScheduleAsync.
@@ -3749,7 +3485,7 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
         AutoPoolIdPrefix = "mypool",
         Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
-            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -3889,7 +3625,7 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
         AutoPoolIdPrefix = "mypool",
         Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
-            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchImageReference
+            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -5839,182 +5575,6 @@ Response response = client.GetNode("poolId", "tvm-1695681911_2-20161122t193202z"
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
-]]></code></example>
-    </member>
-    <member name="RebootNodeAsync(string,string,BatchNodeRebootKinds,TimeSpan?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call RebootNodeAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.RebootNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
-]]></code></example>
-    </member>
-    <member name="RebootNode(string,string,BatchNodeRebootKinds,TimeSpan?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call RebootNode.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.RebootNode("poolId", "tvm-1695681911_1-20161122t193202z");
-]]></code></example>
-    </member>
-    <member name="RebootNodeAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call RebootNodeAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = null;
-Response response = await client.RebootNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="RebootNode(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call RebootNode.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = null;
-Response response = client.RebootNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="StartNodeAsync(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call StartNodeAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.StartNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="StartNode(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call StartNode.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.StartNode("poolId", "tvm-1695681911_1-20161122t193202z");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="ReimageNodeAsync(string,string,BatchNodeReimageOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call ReimageNodeAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.ReimageNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
-]]></code></example>
-    </member>
-    <member name="ReimageNode(string,string,BatchNodeReimageOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call ReimageNode.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.ReimageNode("poolId", "tvm-1695681911_1-20161122t193202z");
-]]></code></example>
-    </member>
-    <member name="ReimageNodeAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call ReimageNodeAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = null;
-Response response = await client.ReimageNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="ReimageNode(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call ReimageNode.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = null;
-Response response = client.ReimageNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="DeallocateNodeAsync(string,string,BatchNodeDeallocateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call DeallocateNodeAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.DeallocateNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
-]]></code></example>
-    </member>
-    <member name="DeallocateNode(string,string,BatchNodeDeallocateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call DeallocateNode.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.DeallocateNode("poolId", "tvm-1695681911_1-20161122t193202z");
-]]></code></example>
-    </member>
-    <member name="DeallocateNodeAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call DeallocateNodeAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = null;
-Response response = await client.DeallocateNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="DeallocateNode(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call DeallocateNode.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = null;
-Response response = client.DeallocateNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
     <member name="DisableNodeSchedulingAsync(string,string,BatchNodeDisableSchedulingOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">

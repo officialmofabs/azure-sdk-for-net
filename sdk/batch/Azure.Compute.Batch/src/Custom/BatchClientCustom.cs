@@ -682,6 +682,960 @@ namespace Azure.Compute.Batch
 
             return response;
         }
-        #pragma warning restore AZC0015
+#pragma warning restore AZC0015
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The ID of the Job to delete. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="force"> If true, the server will delete the Job even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The DeleteJobOperation object to allow for polling of operation status. </returns>
+        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobAsync(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        public virtual async Task<DeleteJobOperation> DeleteJobAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
+            scope.Start();
+            try
+            {   // first get the job to be used for the DeleteJobOperation
+                BatchJob job = await GetJobAsync(jobId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions).ConfigureAwait(false);
+
+                Response response = await DeleteJobInternalAsync(jobId, timeOutInSeconds, ocpDate, force, requestConditions, context).ConfigureAwait(false);
+                return new DeleteJobOperation(this, jobId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The ID of the Job to delete. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="force"> If true, the server will delete the Job even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The DeleteJobOperation object to allow for polling of operation status. </returns>
+        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJob(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        public virtual DeleteJobOperation DeleteJob(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
+            scope.Start();
+            try
+            {
+                // first get the job to be used for the DeleteJobOperation
+                BatchJob job = GetJob(jobId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions);
+
+                Response response = DeleteJobInternal(jobId, timeOutInSeconds, ocpDate, force, requestConditions, context);
+                return new DeleteJobOperation(this, jobId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a Certificate from the specified Account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
+        /// <param name="thumbprint"> The thumbprint of the Certificate to be deleted. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The DeleteCertificateOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<DeleteCertificateOperation> DeleteCertificateAsync(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteCertificate");
+            scope.Start();
+            try
+            {
+                Response response = await DeleteCertificateInternalAsync(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpDate, context).ConfigureAwait(false);
+                return new DeleteCertificateOperation(this, thumbprintAlgorithm, thumbprint, response);
+                ;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a Certificate from the specified Account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
+        /// <param name="thumbprint"> The thumbprint of the Certificate to be deleted. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The DeleteCertificateOperation object to allow for polling of operation status. </returns>
+        public virtual DeleteCertificateOperation DeleteCertificate(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteCertificate");
+            scope.Start();
+            try
+            {
+                Response response = DeleteCertificateInternal(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpDate, context);
+                return new DeleteCertificateOperation(this, thumbprintAlgorithm, thumbprint, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a Job Schedule from the specified Account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="force"> If true, the server will delete the JobSchedule even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The DeleteJobScheduleOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<DeleteJobScheduleOperation> DeleteJobScheduleAsync(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
+            scope.Start();
+            try
+            {   // first get the job schedule to be used for the DeleteJobScheduleOperation
+                BatchJobSchedule job = await GetJobScheduleAsync(jobScheduleId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions).ConfigureAwait(false);
+
+                Response response = await DeleteJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context).ConfigureAwait(false);
+                return new DeleteJobScheduleOperation(this, jobScheduleId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a Job Schedule from the specified Account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="force"> If true, the server will delete the JobSchedule even if the corresponding nodes have not fully processed the deletion. The default value is false. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The DeleteJobScheduleOperation object to allow for polling of operation status. </returns>
+        public virtual DeleteJobScheduleOperation DeleteJobSchedule(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
+            scope.Start();
+            try
+            {   // first get the job schedule to be used for the DeleteJobScheduleOperation
+                BatchJobSchedule job = GetJobSchedule(jobScheduleId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions);
+
+                Response response = DeleteJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context);
+                return new DeleteJobScheduleOperation(this, jobScheduleId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a Pool from the specified Account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool to get. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The DeletePoolOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<DeletePoolOperation> DeletePoolAsync(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeletePool");
+            scope.Start();
+            try
+            {   // get the pool to be used for the DeletePoolOperation
+                BatchPool pool = await GetPoolAsync(poolId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions).ConfigureAwait(false);
+
+                Response response = await DeletePoolInternalAsync(poolId, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
+                return new DeletePoolOperation(this, poolId, response, pool.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a Pool from the specified Account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool to get. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The DeletePoolOperation object to allow for polling of operation status. </returns>
+        public virtual DeletePoolOperation DeletePool(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeletePool");
+            scope.Start();
+            try
+            {   // get the pool to be used for the DeletePoolOperation
+                BatchPool pool = GetPool(poolId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions);
+
+                Response response = DeletePoolInternal(poolId, timeOutInSeconds, ocpDate, requestConditions, context);
+                return new DeletePoolOperation(this, poolId, response, pool.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Terminates the specified Job, marking it as completed. </summary>
+        /// <param name="jobId"> The ID of the Job to terminate. </param>
+        /// <param name="parameters"> The options to use for terminating the Job. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="force"> If true, the server will terminate the Job even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// When a Terminate Job request is received, the Batch service sets the Job to the
+        /// terminating state. The Batch service then terminates any running Tasks
+        /// associated with the Job and runs any required Job release Tasks. Then the Job
+        /// moves into the completed state. If there are any Tasks in the Job in the active
+        /// state, they will remain in the active state. Once a Job is terminated, new
+        /// Tasks cannot be added and any remaining active Tasks will not be scheduled.
+        /// </remarks>
+        /// <returns> The TerminateJobOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<TerminateJobOperation> TerminateJobAsync(string jobId, BatchJobTerminateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
+            scope.Start();
+            try
+            {   // first get the job to be used for the TerminateJobOperation
+                BatchJob job = await GetJobAsync(jobId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions).ConfigureAwait(false);
+
+                Response response = await TerminateJobInternalAsync(jobId, parameters, timeOutInSeconds, ocpDate, force, requestConditions, cancellationToken).ConfigureAwait(false);
+                return new TerminateJobOperation(this, jobId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Terminates the specified Job, marking it as completed. </summary>
+        /// <param name="jobId"> The ID of the Job to terminate. </param>
+        /// <param name="parameters"> The options to use for terminating the Job. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="force"> If true, the server will terminate the Job even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// When a Terminate Job request is received, the Batch service sets the Job to the
+        /// terminating state. The Batch service then terminates any running Tasks
+        /// associated with the Job and runs any required Job release Tasks. Then the Job
+        /// moves into the completed state. If there are any Tasks in the Job in the active
+        /// state, they will remain in the active state. Once a Job is terminated, new
+        /// Tasks cannot be added and any remaining active Tasks will not be scheduled.
+        /// </remarks>
+        /// <returns> The TerminateJobOperation object to allow for polling of operation status. </returns>
+        public virtual TerminateJobOperation TerminateJob(string jobId, BatchJobTerminateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
+            scope.Start();
+            try
+            {   // first get the job to be used for the TerminateJobOperation
+                BatchJob job = GetJob(jobId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions);
+
+                Response response = TerminateJobInternal(jobId, parameters, timeOutInSeconds, ocpDate, force, requestConditions, cancellationToken);
+                return new TerminateJobOperation(this, jobId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Terminates a Job Schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="force"> If true, the server will terminate the JobSchedule even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The TerminateJobScheduleOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<TerminateJobScheduleOperation> TerminateJobScheduleAsync(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobSchedule");
+            scope.Start();
+            try
+            {   // first get the job schedule to be used for the TerminateJobScheduleOperation
+                BatchJobSchedule job = await GetJobScheduleAsync(jobScheduleId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions).ConfigureAwait(false);
+
+                Response response = await TerminateJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context).ConfigureAwait(false);
+                return new TerminateJobScheduleOperation(this, jobScheduleId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Terminates a Job Schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="force"> If true, the server will terminate the JobSchedule even if the corresponding nodes have not fully processed the termination. The default value is false. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The TerminateJobScheduleOperation object to allow for polling of operation status. </returns>
+        public virtual TerminateJobScheduleOperation TerminateJobSchedule(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobSchedule");
+            scope.Start();
+            try
+            {   // first get the job schedule to be used for the TerminateJobScheduleOperation
+                BatchJobSchedule job = GetJobSchedule(jobScheduleId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions);
+
+                Response response = TerminateJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context);
+                return new TerminateJobScheduleOperation(this, jobScheduleId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Disables the specified Job, preventing new Tasks from running. </summary>
+        /// <param name="jobId"> The ID of the Job to disable. </param>
+        /// <param name="content"> The options to use for disabling the Job. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// The Batch Service immediately moves the Job to the disabling state. Batch then
+        /// uses the disableTasks parameter to determine what to do with the currently
+        /// running Tasks of the Job. The Job remains in the disabling state until the
+        /// disable operation is completed and all Tasks have been dealt with according to
+        /// the disableTasks option; the Job then moves to the disabled state. No new Tasks
+        /// are started under the Job until it moves back to active state. If you try to
+        /// disable a Job that is in any state other than active, disabling, or disabled,
+        /// the request fails with status code 409.
+        /// </remarks>
+        /// <returns> The DisableJobOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<DisableJobOperation> DisableJobAsync(string jobId, BatchJobDisableOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DisableJob");
+            scope.Start();
+            try
+            {   // first get the job to be used for the TerminateJobOperation
+                BatchJob job = await GetJobAsync(jobId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions).ConfigureAwait(false);
+
+                Response response = await DisableJobInternalAsync(jobId, content, timeOutInSeconds, ocpDate, requestConditions, cancellationToken).ConfigureAwait(false);
+                ;
+                return new DisableJobOperation(this, jobId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Disables the specified Job, preventing new Tasks from running. </summary>
+        /// <param name="jobId"> The ID of the Job to disable. </param>
+        /// <param name="content"> The options to use for disabling the Job. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// The Batch Service immediately moves the Job to the disabling state. Batch then
+        /// uses the disableTasks parameter to determine what to do with the currently
+        /// running Tasks of the Job. The Job remains in the disabling state until the
+        /// disable operation is completed and all Tasks have been dealt with according to
+        /// the disableTasks option; the Job then moves to the disabled state. No new Tasks
+        /// are started under the Job until it moves back to active state. If you try to
+        /// disable a Job that is in any state other than active, disabling, or disabled,
+        /// the request fails with status code 409.
+        /// </remarks>
+        /// <returns> The DisableJobOperation object to allow for polling of operation status. </returns>
+        public virtual DisableJobOperation DisableJob(string jobId, BatchJobDisableOptions content, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DisableJob");
+            scope.Start();
+            try
+            {   // first get the job to be used for the TerminateJobOperation
+                BatchJob job = GetJob(jobId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions);
+
+                Response response = DisableJobInternal(jobId, content, timeOutInSeconds, ocpDate, requestConditions, cancellationToken);
+                ;
+                return new DisableJobOperation(this, jobId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Enables the specified Job, allowing new Tasks to run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The ID of the Job to enable. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The EnableJobOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<EnableJobOperation> EnableJobAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.EnableJob");
+            scope.Start();
+            try
+            {   // first get the job to be used for the TerminateJobOperation
+                BatchJob job = await GetJobAsync(jobId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions).ConfigureAwait(false);
+
+                Response response = await EnableJobInternalAsync(jobId, timeOutInSeconds, ocpDate, requestConditions).ConfigureAwait(false);
+                ;
+                return new EnableJobOperation(this, jobId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Enables the specified Job, allowing new Tasks to run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The ID of the Job to enable. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The EnableJobOperation object to allow for polling of operation status. </returns>
+        public virtual EnableJobOperation EnableJob(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.EnableJob");
+            scope.Start();
+            try
+            {   // first get the job to be used for the TerminateJobOperation
+                BatchJob job = GetJob(jobId, timeOutInSeconds: timeOutInSeconds, ocpDate: ocpDate, requestConditions: requestConditions);
+
+                Response response = EnableJobInternal(jobId, timeOutInSeconds, ocpDate, requestConditions);
+                ;
+                return new EnableJobOperation(this, jobId, response, job.CreationTime);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deallocates the specified Compute Node. </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="parameters"> The options to use for deallocating the Compute Node. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> You can deallocate a Compute Node only if it is in an idle or running state. </remarks>
+        /// <returns> The DeallocateNodeOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<DeallocateNodeOperation> DeallocateNodeAsync(string poolId, string nodeId, BatchNodeDeallocateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNode");
+            scope.Start();
+            try
+            {
+                Response response = await DeallocateNodeInternalAsync(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return new DeallocateNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deallocates the specified Compute Node. </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="parameters"> The options to use for deallocating the Compute Node. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> You can deallocate a Compute Node only if it is in an idle or running state. </remarks>
+        /// <returns> The DeallocateNodeOperation object to allow for polling of operation status. </returns>
+        public virtual DeallocateNodeOperation DeallocateNode(string poolId, string nodeId, BatchNodeDeallocateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNode");
+            scope.Start();
+            try
+            {
+                Response response = DeallocateNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken);
+                return new DeallocateNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Starts the specified Compute Node.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The StartNodeOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<StartNodeOperation> StartNodeAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.StartNode");
+            scope.Start();
+            try
+            {
+                Response response = await StartNodeInternalAsync(poolId, nodeId, timeOutInSeconds, ocpDate, context: context).ConfigureAwait(false);
+                return new StartNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Starts the specified Compute Node.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The StartNodeOperation object to allow for polling of operation status. </returns>
+        public virtual StartNodeOperation StartNode(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.StartNode");
+            scope.Start();
+            try
+            {
+                Response response = StartNodeInternal(poolId, nodeId, timeOutInSeconds, ocpDate, context: context);
+                return new StartNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Restarts the specified Compute Node. </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="parameters"> The options to use for rebooting the Compute Node. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> You can restart a Compute Node only if it is in an idle or running state. </remarks>
+        /// <returns> The RebootNodeOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<RebootNodeOperation> RebootNodeAsync(string poolId, string nodeId, BatchNodeRebootKinds parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.RebootNode");
+            scope.Start();
+            try
+            {
+                Response response = await RebootNodeInternalAsync(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return new RebootNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Restarts the specified Compute Node. </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="parameters"> The options to use for rebooting the Compute Node. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> You can restart a Compute Node only if it is in an idle or running state. </remarks>
+        /// <returns> The RebootNodeOperation object to allow for polling of operation status. </returns>
+        public virtual RebootNodeOperation RebootNode(string poolId, string nodeId, BatchNodeRebootKinds parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.RebootNode");
+            scope.Start();
+            try
+            {
+                Response response = RebootNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken);
+                return new RebootNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Reinstalls the operating system on the specified Compute Node. </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="parameters"> The options to use for reimaging the Compute Node. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// You can reinstall the operating system on a Compute Node only if it is in an
+        /// idle or running state. This API can be invoked only on Pools created with the
+        /// cloud service configuration property.
+        /// </remarks>
+        /// <returns> The ReimageNodeOperation object to allow for polling of operation status. </returns>
+        public virtual async Task<ReimageNodeOperation> ReimageNodeAsync(string poolId, string nodeId, BatchNodeReimageOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNode");
+            scope.Start();
+            try
+            {
+                Response response = await ReimageNodeInternalAsync(poolId: poolId, nodeId:  nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return new ReimageNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Reinstalls the operating system on the specified Compute Node. </summary>
+        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
+        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
+        /// <param name="parameters"> The options to use for reimaging the Compute Node. </param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// You can reinstall the operating system on a Compute Node only if it is in an
+        /// idle or running state. This API can be invoked only on Pools created with the
+        /// cloud service configuration property.
+        /// </remarks>
+        /// <returns> The ReimageNodeOperation object to allow for polling of operation status. </returns>
+        public virtual ReimageNodeOperation ReimageNode(string poolId, string nodeId, BatchNodeReimageOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNode");
+            scope.Start();
+            try
+            {
+                Response response = ReimageNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken);
+                return new ReimageNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

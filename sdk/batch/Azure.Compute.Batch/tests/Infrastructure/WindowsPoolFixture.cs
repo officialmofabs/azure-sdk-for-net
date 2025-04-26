@@ -31,7 +31,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         public BatchPoolCreateOptions CreatePoolOptions(int? targetDedicatedNodes = null)
         {
             // create a new pool
-            BatchImageReference imageReference = new BatchImageReference()
+            BatchVmImageReference imageReference = new BatchVmImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",

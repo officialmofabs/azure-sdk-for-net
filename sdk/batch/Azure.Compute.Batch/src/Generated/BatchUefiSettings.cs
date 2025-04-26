@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Compute.Batch
 {
     /// <summary> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </summary>
-    public partial class UefiSettings
+    public partial class BatchUefiSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UefiSettings"/>. </summary>
-        public UefiSettings()
+        /// <summary> Initializes a new instance of <see cref="BatchUefiSettings"/>. </summary>
+        public BatchUefiSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UefiSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchUefiSettings"/>. </summary>
         /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. </param>
         /// <param name="vTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UefiSettings(bool? secureBootEnabled, bool? vTpmEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchUefiSettings(bool? secureBootEnabled, bool? vTpmEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecureBootEnabled = secureBootEnabled;
             VTpmEnabled = vTpmEnabled;

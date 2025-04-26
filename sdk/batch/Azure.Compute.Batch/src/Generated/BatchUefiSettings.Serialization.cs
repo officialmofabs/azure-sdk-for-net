@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class DiffDiskSettings : IUtf8JsonSerializable, IJsonModel<DiffDiskSettings>
+    public partial class BatchUefiSettings : IUtf8JsonSerializable, IJsonModel<BatchUefiSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiffDiskSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchUefiSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DiffDiskSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchUefiSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,21 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiffDiskSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchUefiSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiffDiskSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Placement))
+            if (Optional.IsDefined(SecureBootEnabled))
             {
-                writer.WritePropertyName("placement"u8);
-                writer.WriteStringValue(Placement.Value.ToString());
+                writer.WritePropertyName("secureBootEnabled"u8);
+                writer.WriteBooleanValue(SecureBootEnabled.Value);
+            }
+            if (Optional.IsDefined(VTpmEnabled))
+            {
+                writer.WritePropertyName("vTpmEnabled"u8);
+                writer.WriteBooleanValue(VTpmEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,19 +61,19 @@ namespace Azure.Compute.Batch
             }
         }
 
-        DiffDiskSettings IJsonModel<DiffDiskSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchUefiSettings IJsonModel<BatchUefiSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiffDiskSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchUefiSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiffDiskSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiffDiskSettings(document.RootElement, options);
+            return DeserializeBatchUefiSettings(document.RootElement, options);
         }
 
-        internal static DiffDiskSettings DeserializeDiffDiskSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchUefiSettings DeserializeBatchUefiSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,18 +81,28 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            DiffDiskPlacement? placement = default;
+            bool? secureBootEnabled = default;
+            bool? vTpmEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("placement"u8))
+                if (property.NameEquals("secureBootEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    placement = new DiffDiskPlacement(property.Value.GetString());
+                    secureBootEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("vTpmEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vTpmEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -96,46 +111,46 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiffDiskSettings(placement, serializedAdditionalRawData);
+            return new BatchUefiSettings(secureBootEnabled, vTpmEnabled, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DiffDiskSettings>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchUefiSettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiffDiskSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchUefiSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiffDiskSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DiffDiskSettings IPersistableModel<DiffDiskSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchUefiSettings IPersistableModel<BatchUefiSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiffDiskSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchUefiSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDiffDiskSettings(document.RootElement, options);
+                        return DeserializeBatchUefiSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiffDiskSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DiffDiskSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchUefiSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DiffDiskSettings FromResponse(Response response)
+        internal static BatchUefiSettings FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDiffDiskSettings(document.RootElement);
+            return DeserializeBatchUefiSettings(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

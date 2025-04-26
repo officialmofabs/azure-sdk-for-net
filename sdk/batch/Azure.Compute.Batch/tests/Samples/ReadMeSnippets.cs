@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch.Tests.Samples
 
             string poolID = "HelloWorldPool";
 
-            BatchImageReference imageReference = new BatchImageReference()
+            BatchVmImageReference imageReference = new BatchVmImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",

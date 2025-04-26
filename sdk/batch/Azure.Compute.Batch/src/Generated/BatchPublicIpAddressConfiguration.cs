@@ -12,7 +12,7 @@ using System.Net;
 namespace Azure.Compute.Batch
 {
     /// <summary> The public IP Address configuration of the networking configuration of a Pool. </summary>
-    public partial class PublicIpAddressConfiguration
+    public partial class BatchPublicIpAddressConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,17 +46,17 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PublicIpAddressConfiguration"/>. </summary>
-        public PublicIpAddressConfiguration()
+        /// <summary> Initializes a new instance of <see cref="BatchPublicIpAddressConfiguration"/>. </summary>
+        public BatchPublicIpAddressConfiguration()
         {
             IpAddressIds = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PublicIpAddressConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPublicIpAddressConfiguration"/>. </summary>
         /// <param name="ipAddressProvisioningType"> The provisioning type for Public IP Addresses for the Pool. The default value is BatchManaged. </param>
         /// <param name="ipAddressIds"> The list of public IPs which the Batch service will use when provisioning Compute Nodes. The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/Low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicIpAddressConfiguration(IpAddressProvisioningType? ipAddressProvisioningType, IList<IPAddress> ipAddressIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchPublicIpAddressConfiguration(IpAddressProvisioningType? ipAddressProvisioningType, IList<IPAddress> ipAddressIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IpAddressProvisioningType = ipAddressProvisioningType;
             IpAddressIds = ipAddressIds;

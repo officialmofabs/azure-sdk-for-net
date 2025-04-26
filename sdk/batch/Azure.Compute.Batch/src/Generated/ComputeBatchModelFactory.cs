@@ -142,7 +142,7 @@ namespace Azure.Compute.Batch
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchVmImageReference"/>. </summary>
         /// <param name="publisher"> The publisher of the Azure Virtual Machines Marketplace Image. For example, Canonical or MicrosoftWindowsServer. </param>
         /// <param name="offer"> The offer type of the Azure Virtual Machines Marketplace Image. For example, UbuntuServer or WindowsServer. </param>
         /// <param name="sku"> The SKU of the Azure Virtual Machines Marketplace Image. For example, 18.04-LTS or 2019-Datacenter. </param>
@@ -151,10 +151,10 @@ namespace Azure.Compute.Batch
         /// <param name="exactVersion"> The specific version of the platform image or marketplace image used to create the node. This read-only field differs from 'version' only if the value specified for 'version' when the pool was created was 'latest'. </param>
         /// <param name="sharedGalleryImageId"> The shared gallery image unique identifier. This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call. </param>
         /// <param name="communityGalleryImageId"> The community gallery image unique identifier. This property is mutually exclusive with other properties and can be fetched from community gallery image GET call. </param>
-        /// <returns> A new <see cref="Batch.BatchImageReference"/> instance for mocking. </returns>
-        public static BatchImageReference BatchImageReference(string publisher = null, string offer = null, string sku = null, string version = null, ResourceIdentifier virtualMachineImageId = null, string exactVersion = null, string sharedGalleryImageId = null, string communityGalleryImageId = null)
+        /// <returns> A new <see cref="Batch.BatchVmImageReference"/> instance for mocking. </returns>
+        public static BatchVmImageReference BatchVmImageReference(string publisher = null, string offer = null, string sku = null, string version = null, ResourceIdentifier virtualMachineImageId = null, string exactVersion = null, string sharedGalleryImageId = null, string communityGalleryImageId = null)
         {
-            return new BatchImageReference(
+            return new BatchVmImageReference(
                 publisher,
                 offer,
                 sku,
@@ -397,7 +397,7 @@ namespace Azure.Compute.Batch
         /// <param name="batchSupportEndOfLife"> The time when the Azure Batch service will stop accepting create Pool requests for the Image. </param>
         /// <param name="verificationType"> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </param>
         /// <returns> A new <see cref="Batch.BatchSupportedImage"/> instance for mocking. </returns>
-        public static BatchSupportedImage BatchSupportedImage(string nodeAgentSkuId = null, BatchImageReference imageReference = null, OSType osType = default, IEnumerable<string> capabilities = null, DateTimeOffset? batchSupportEndOfLife = null, ImageVerificationType verificationType = default)
+        public static BatchSupportedImage BatchSupportedImage(string nodeAgentSkuId = null, BatchVmImageReference imageReference = null, OSType osType = default, IEnumerable<string> capabilities = null, DateTimeOffset? batchSupportEndOfLife = null, ImageVerificationType verificationType = default)
         {
             capabilities ??= new List<string>();
 
@@ -1400,7 +1400,7 @@ namespace Azure.Compute.Batch
         /// <param name="imageReference"> The reference to the Azure Virtual Machine's Marketplace Image. </param>
         /// <param name="scaleSetVmResourceId"> The resource ID of the Compute Node's current Virtual Machine Scale Set VM. Only defined if the Batch Account was created with its poolAllocationMode property set to 'UserSubscription'. </param>
         /// <returns> A new <see cref="Batch.VirtualMachineInfo"/> instance for mocking. </returns>
-        public static VirtualMachineInfo VirtualMachineInfo(BatchImageReference imageReference = null, string scaleSetVmResourceId = null)
+        public static VirtualMachineInfo VirtualMachineInfo(BatchVmImageReference imageReference = null, string scaleSetVmResourceId = null)
         {
             return new VirtualMachineInfo(imageReference, scaleSetVmResourceId, serializedAdditionalRawData: null);
         }

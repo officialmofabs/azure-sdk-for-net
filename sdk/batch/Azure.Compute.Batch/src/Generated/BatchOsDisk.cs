@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Compute.Batch
 {
     /// <summary> Settings for the operating system disk of the compute node (VM). </summary>
-    public partial class OSDisk
+    public partial class BatchOsDisk
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
-        public OSDisk()
+        /// <summary> Initializes a new instance of <see cref="BatchOsDisk"/>. </summary>
+        public BatchOsDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchOsDisk"/>. </summary>
         /// <param name="ephemeralOSDiskSettings"> Specifies the ephemeral Disk Settings for the operating system disk used by the compute node (VM). </param>
         /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The default values are: None for Standard storage. ReadOnly for Premium storage. </param>
         /// <param name="diskSizeGB"> The initial disk size in GB when creating new OS disk. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSDisk(DiffDiskSettings ephemeralOSDiskSettings, CachingType? caching, int? diskSizeGB, ManagedDisk managedDisk, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchOsDisk(BatchDiffDiskSettings ephemeralOSDiskSettings, CachingType? caching, int? diskSizeGB, ManagedDisk managedDisk, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EphemeralOSDiskSettings = ephemeralOSDiskSettings;
             Caching = caching;
@@ -68,7 +68,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Specifies the ephemeral Disk Settings for the operating system disk used by the compute node (VM). </summary>
-        public DiffDiskSettings EphemeralOSDiskSettings { get; set; }
+        public BatchDiffDiskSettings EphemeralOSDiskSettings { get; set; }
         /// <summary> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The default values are: None for Standard storage. ReadOnly for Premium storage. </summary>
         public CachingType? Caching { get; set; }
         /// <summary> The initial disk size in GB when creating new OS disk. </summary>

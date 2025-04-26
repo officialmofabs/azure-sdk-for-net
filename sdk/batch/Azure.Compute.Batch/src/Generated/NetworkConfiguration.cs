@@ -57,7 +57,7 @@ namespace Azure.Compute.Batch
         /// <param name="publicIpAddressConfiguration"> The Public IPAddress configuration for Compute Nodes in the Batch Pool. </param>
         /// <param name="enableAcceleratedNetworking"> Whether this pool should enable accelerated networking. Accelerated networking enables single root I/O virtualization (SR-IOV) to a VM, which may lead to improved networking performance. For more details, see: https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkConfiguration(string subnetId, DynamicVNetAssignmentScope? dynamicVnetAssignmentScope, BatchPoolEndpointConfiguration endpointConfiguration, PublicIpAddressConfiguration publicIpAddressConfiguration, bool? enableAcceleratedNetworking, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkConfiguration(string subnetId, DynamicVNetAssignmentScope? dynamicVnetAssignmentScope, BatchPoolEndpointConfiguration endpointConfiguration, BatchPublicIpAddressConfiguration publicIpAddressConfiguration, bool? enableAcceleratedNetworking, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubnetId = subnetId;
             DynamicVnetAssignmentScope = dynamicVnetAssignmentScope;
@@ -74,7 +74,7 @@ namespace Azure.Compute.Batch
         /// <summary> The configuration for endpoints on Compute Nodes in the Batch Pool. </summary>
         public BatchPoolEndpointConfiguration EndpointConfiguration { get; set; }
         /// <summary> The Public IPAddress configuration for Compute Nodes in the Batch Pool. </summary>
-        public PublicIpAddressConfiguration PublicIpAddressConfiguration { get; set; }
+        public BatchPublicIpAddressConfiguration PublicIpAddressConfiguration { get; set; }
         /// <summary> Whether this pool should enable accelerated networking. Accelerated networking enables single root I/O virtualization (SR-IOV) to a VM, which may lead to improved networking performance. For more details, see: https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview. </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
     }

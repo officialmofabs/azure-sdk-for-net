@@ -175,7 +175,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                DeletePoolOperation deletePoolOperation = await client.DeletePoolAsync(poolID);
+                await deletePoolOperation.WaitForCompletionAsync();
             }
         }
 
@@ -186,33 +187,33 @@ namespace Azure.Compute.Batch.Tests.Integration
             WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "SecurityProfilePool", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
             TimeSpan evalInterval = TimeSpan.FromMinutes(6);
-            var VMSize = "STANDARD_D2S_V3";
+            var VMSize = "STANDARD_D2S_V5";
             var targetDedicatedNodes = 1;
 
             try
             {
                 // create a new pool
-                BatchImageReference imageReference = new BatchImageReference()
+                BatchVmImageReference imageReference = new BatchVmImageReference()
                 {
-                    Publisher = "canonical",
-                    Offer = "0001-com-ubuntu-server-jammy",
-                    Sku = "22_04-lts",
+                    Publisher = "microsoftwindowsserver",
+                    Offer = "windowsserver",
+                    Sku = "2022-datacenter-g2",
                     Version = "latest"
                 };
 
-                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.ubuntu 22.04")
+                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64")
                 {
                     SecurityProfile = new SecurityProfile()
                     {
                         SecurityType = SecurityTypes.ConfidentialVM,
-                        EncryptionAtHost = true,
-                        UefiSettings = new UefiSettings()
+                        EncryptionAtHost = false,
+                        UefiSettings = new BatchUefiSettings()
                         {
                             SecureBootEnabled = true,
                             VTpmEnabled = true,
                         }
                     },
-                    OsDisk = new OSDisk()
+                    OsDisk = new BatchOsDisk()
                     {
                         Caching = CachingType.ReadWrite,
                         ManagedDisk = new ManagedDisk()
@@ -236,11 +237,14 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 BatchPool pool = await client.GetPoolAsync(poolID);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.SecurityType, SecurityTypes.ConfidentialVM);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost, true);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost, false);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.Caching, CachingType.ReadWrite);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, SecurityEncryptionTypes.VMGuestStateOnly);
+            }catch (RequestFailedException e)
+            {
+                Assert.Fail(e.Message);
             }
             finally
             {
@@ -353,9 +357,9 @@ namespace Azure.Compute.Batch.Tests.Integration
                 updateContent.NetworkConfiguration = new NetworkConfiguration()
                 {
                     EndpointConfiguration = new BatchPoolEndpointConfiguration(
-                        new List<InboundNatPool>()
+                        new List<BatchInboundNatPool>()
                         {
-                            new InboundNatPool("ruleName", InboundEndpointProtocol.Tcp, 3389, 15000, 15100)
+                            new BatchInboundNatPool("ruleName", InboundEndpointProtocol.Tcp, 3389, 15000, 15100)
                         }
                     )
                     // verify pool got updated
