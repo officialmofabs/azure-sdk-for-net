@@ -39,8 +39,7 @@ namespace Azure.AI.Projects
             }
 
             var result = Resolve(func, functionArguments);
-            string serializedResult = JsonSerializer.Serialize(result);
-            return new ToolOutput(toolCallId, serializedResult);
+            return new ToolOutput(toolCallId, result == null ? "" : result.ToString());
         }
 
         /// <summary>
@@ -53,7 +52,7 @@ namespace Azure.AI.Projects
         {
             JsonDocument argumentsJson = JsonDocument.Parse(functionArguments);
             MethodInfo method = function.Method;
-            var args = new ArrayList();
+            var args = new List<object>();
             foreach (ParameterInfo param in function.Method.GetParameters())
             {
                 if (argumentsJson.RootElement.TryGetProperty(param.Name ?? "", out JsonElement element))

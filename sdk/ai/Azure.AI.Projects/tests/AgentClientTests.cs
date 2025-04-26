@@ -649,9 +649,9 @@ namespace Azure.AI.Projects.Tests
             if (!IsAsync)
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
 
-            int GetHumidityByAddress(string address)
+            string GetHumidityByAddress(string address)
             {
-                return address.Contains("Seattle")? 80 : 60;
+                return address.Contains("Seattle")? "80" : "60";
             }
 
             FunctionToolDefinition correctGeHhumidityByAddressTool = new(
