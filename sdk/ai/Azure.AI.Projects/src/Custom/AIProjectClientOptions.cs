@@ -10,27 +10,8 @@ namespace Azure.AI.Projects
     /// <summary> Client options for AIProjectClient. </summary>
     public partial class AIProjectClientOptions : ClientOptions
     {
-        private Dictionary<string, Delegate> _autoFunctionCallDelegates = new();
-        private int _maxRetry;
         /// <summary> The size of the client cache. </summary>
         public int ClientCacheSize { get; set; } = 100;
-
-        /// <summary>
-        /// Enables auto tool calls to be executed automatically during streaming.  If this is not set, function must be called manually.
-        /// </summary>
-        /// <param name="delegates">Dictionary in name and delegate in pair</param>
-        /// <param name="maxRetry">Maximum number of errors allowed and retry per stream. Default value is 10.</param>
-        public virtual void EnableAutoFunctionCalls(Dictionary<string, Delegate> delegates, int maxRetry = 10)
-        {
-            ValidateAutoFunctions(delegates);
-            _autoFunctionCallDelegates.Clear();
-
-            foreach (var kvp in delegates)
-            {
-                _autoFunctionCallDelegates[kvp.Key] = kvp.Value;
-            }
-            _maxRetry = maxRetry;
-        }
 
         private void ValidateAutoFunctions(Dictionary<string, Delegate> delegates)
         {
@@ -46,9 +27,5 @@ namespace Azure.AI.Projects
                 }
             }
         }
-
-        internal Dictionary<string, Delegate> AutoFunctionCallDelegates => _autoFunctionCallDelegates;
-
-        internal int MaxRetry => _maxRetry;
     }
 }

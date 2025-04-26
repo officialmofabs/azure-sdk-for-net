@@ -713,12 +713,11 @@ namespace Azure.AI.Projects.Tests
             Dictionary<string, Delegate> delegates = new();
             delegates.Add(nameof(GetHumidityByAddress), GetHumidityByAddress);
 
-            AIProjectClientOptions options = new AIProjectClientOptions();
-            options.EnableAutoFunctionCalls(delegates, 0);
-            AgentsClient client = GetClient(options);
+            AgentsClient client = GetClient();
             string output = "";
             bool completed = false;
             List<ToolDefinition> tools = new();
+            AutoFunctionCallOptions autoFunctionCallOptions = new(delegates, 0);
             if (correctDefinition)
                 tools.Add(correctGeHhumidityByAddressTool);
             else
@@ -737,7 +736,7 @@ namespace Azure.AI.Projects.Tests
                 MessageRole.User,
                 "Get humidity for address, 456 2nd Ave in city, Seattle");
 
-            await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+            await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
             {
                 if (streamingUpdate is MessageContentUpdate contentUpdate)
                 {

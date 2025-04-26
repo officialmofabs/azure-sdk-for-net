@@ -55,10 +55,11 @@ public partial class AgentsClient
     /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <param name="autoFunctionCallOptions">If specified, function calls defined in tools will be called automatically.</param>
     /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual AsyncCollectionResult<StreamingUpdate> CreateRunStreamingAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<StreamingUpdate> CreateRunStreamingAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default, AutoFunctionCallOptions autoFunctionCallOptions = null)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -91,8 +92,7 @@ public partial class AgentsClient
         async Task<Response<ThreadRun>> cancelRunAsync(string runId) => await this.CancelRunAsync(threadId, runId).ConfigureAwait(false);
         return new AsyncStreamingUpdateCollection(
             cancellationToken,
-            _autoFunctionCallDelegates,
-            _maxRetry,
+            autoFunctionCallOptions,
             0,
             sendRequestAsync,
             cancelRunAsync,
@@ -140,10 +140,11 @@ public partial class AgentsClient
     /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <param name="autoFunctionCallOptions">If specified, function calls defined in tools will be called automatically.</param>
     /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual CollectionResult<StreamingUpdate> CreateRunStreaming(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<StreamingUpdate> CreateRunStreaming(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default, AutoFunctionCallOptions autoFunctionCallOptions = null)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -176,8 +177,7 @@ public partial class AgentsClient
 
         return new StreamingUpdateCollection(
             cancellationToken,
-            _autoFunctionCallDelegates,
-            _maxRetry,
+            autoFunctionCallOptions,
             0,
             sendRequest,
             cancelRun,
@@ -188,9 +188,10 @@ public partial class AgentsClient
     /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
     /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <param name="autoFunctionCallOptions">If specified, function calls defined in tools will be called automatically.</param>
     /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default, AutoFunctionCallOptions autoFunctionCallOptions = null)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         return SubmitToolOutputsToStream(run, toolOutputs, int.MaxValue, cancellationToken);
@@ -201,9 +202,10 @@ public partial class AgentsClient
     /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     /// <param name="currentRetry"> The count of current retry of auto function calls.  Cancel the run if reach to the maxinum. </param>
+    /// <param name="autoFunctionCallOptions">If specified, function calls defined in tools will be called automatically.</param>
     /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    internal virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, int currentRetry = 0, CancellationToken cancellationToken = default)
+    internal virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, int currentRetry = 0, CancellationToken cancellationToken = default, AutoFunctionCallOptions autoFunctionCallOptions = null)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNull(run, nameof(run));
@@ -218,8 +220,7 @@ public partial class AgentsClient
 
         return new StreamingUpdateCollection(
             cancellationToken,
-            _autoFunctionCallDelegates,
-            _maxRetry,
+            autoFunctionCallOptions,
             currentRetry,
             sendRequest,
             cancelRun,
@@ -230,9 +231,10 @@ public partial class AgentsClient
     /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
     /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <param name="autoFunctionCallOptions">If specified, function calls defined in tools will be called automatically.</param>
     /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default, AutoFunctionCallOptions autoFunctionCallOptions = null)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         return SubmitToolOutputsToStreamAsync(run, toolOutputs, cancellationToken);
@@ -243,9 +245,10 @@ public partial class AgentsClient
     /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     /// <param name="currentRetry"> The count of current retry of auto function calls.  Cancel the run if reach to the maxinum. </param>
+    /// <param name="autoFunctionCallOptions">If specified, function calls defined in tools will be called automatically.</param>
     /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    internal virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, int currentRetry = 0, CancellationToken cancellationToken = default)
+    internal virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, int currentRetry = 0, CancellationToken cancellationToken = default, AutoFunctionCallOptions autoFunctionCallOptions = null)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNull(run, nameof(run));
@@ -260,8 +263,7 @@ public partial class AgentsClient
 
         return new AsyncStreamingUpdateCollection(
             cancellationToken,
-            _autoFunctionCallDelegates,
-            _maxRetry,
+            autoFunctionCallOptions,
             currentRetry,
             sendRequestAsync,
             cancelRunAsync,

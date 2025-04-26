@@ -22,7 +22,7 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
 {
     private readonly Func<Task<Response>> _sendRequestAsync;
     private readonly CancellationToken _cancellationToken;
-    private readonly ToolCallsResolver _toolCallsResolver;
+    private readonly ToolCallsResolver? _toolCallsResolver;
     private readonly Func<ThreadRun, IEnumerable<ToolOutput>, int, AsyncCollectionResult<StreamingUpdate>> _submitToolOutputsToStreamAsync;
     private readonly int _maxRetry;
     private int _currRetry;
@@ -30,8 +30,7 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
 
     public AsyncStreamingUpdateCollection(
         CancellationToken cancellationToken,
-        Dictionary<string, Delegate> delegates,
-        int maxRetry,
+        AutoFunctionCallOptions autoFunctionCallOptions,
         int currentRetry,
         Func<Task<Response>> sendRequestAsync,
         Func<string, Task<Response<ThreadRun>>> cancelRunAsync,
@@ -42,8 +41,11 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
         _cancellationToken = cancellationToken;
         _sendRequestAsync = sendRequestAsync;
         _submitToolOutputsToStreamAsync = submitToolOutputsToStreamAsync;
-        _toolCallsResolver = new(delegates);
-        _maxRetry = maxRetry;
+        if (autoFunctionCallOptions != null)
+        {
+            _toolCallsResolver = new(autoFunctionCallOptions.AutoFunctionCallDelegates);
+            _maxRetry = autoFunctionCallOptions.MaxRetry;
+        }
         _currRetry = currentRetry;
         _cancelRunAsync = cancelRunAsync;
     }
@@ -80,7 +82,7 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
                 while (await enumerator.MoveNextAsync().ConfigureAwait(false))
                 {
                     var streamingUpdate = enumerator.Current;
-                    if (streamingUpdate is RequiredActionUpdate newActionUpdate && _toolCallsResolver.EnableAutoToolCalls)
+                    if (streamingUpdate is RequiredActionUpdate newActionUpdate && _toolCallsResolver != null)
                     {
                         ToolOutput toolOutput;
                         try

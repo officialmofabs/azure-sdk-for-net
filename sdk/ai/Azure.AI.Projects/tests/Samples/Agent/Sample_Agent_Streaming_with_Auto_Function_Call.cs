@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -86,17 +87,7 @@ public partial class Sample_Agent_Streaming_with_Auto_Function_Call : SamplesBas
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
 
-        #region Snippet:StreamingWithAutoFunctionCall_EnableAutoFunctionCalls
-        List<ToolOutput> toolOutputs = new();
-        Dictionary<string, Delegate> delegates = new();
-        delegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
-        delegates.Add(nameof(GetCityNickname), GetCityNickname);
-        delegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
-        AIProjectClientOptions options = new();
-        options.EnableAutoFunctionCalls(delegates);
-
-        AgentsClient client = new(connectionString, new DefaultAzureCredential(), options);
-        #endregion
+        AgentsClient client = new(connectionString, new DefaultAzureCredential());
 
         #region Snippet:StreamingWithAutoFunctionCallAsync_CreateAgent
         Agent agent = await client.CreateAgentAsync(
@@ -118,8 +109,17 @@ public partial class Sample_Agent_Streaming_with_Auto_Function_Call : SamplesBas
             "What's the weather like in my favorite city?");
         #endregion
 
+        #region Snippet:StreamingWithAutoFunctionCall_EnableAutoFunctionCalls
+        List<ToolOutput> toolOutputs = new();
+        Dictionary<string, Delegate> delegates = new();
+        delegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
+        delegates.Add(nameof(GetCityNickname), GetCityNickname);
+        delegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
+        AutoFunctionCallOptions autoFunctionCallOptions = new(delegates, 10);
+        #endregion
+
         #region Snippet:StreamingWithAutoFunctionCallAsync
-        await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+        await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
             {
@@ -154,15 +154,8 @@ public partial class Sample_Agent_Streaming_with_Auto_Function_Call : SamplesBas
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        List<ToolOutput> toolOutputs = new();
-        Dictionary<string, Delegate> delegates = new();
-        delegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
-        delegates.Add(nameof(GetCityNickname), GetCityNickname);
-        delegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
-        AIProjectClientOptions options = new();
-        options.EnableAutoFunctionCalls(delegates);
 
-        AgentsClient client = new(connectionString, new DefaultAzureCredential(), options);
+        AgentsClient client = new(connectionString, new DefaultAzureCredential());
 
         #region Snippet:StreamingWithAutoFunctionCall_CreateAgent
         Agent agent = client.CreateAgent(
@@ -184,8 +177,15 @@ public partial class Sample_Agent_Streaming_with_Auto_Function_Call : SamplesBas
             "What's the weather like in my favorite city?");
         #endregion
 
+        List<ToolOutput> toolOutputs = new();
+        Dictionary<string, Delegate> delegates = new();
+        delegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
+        delegates.Add(nameof(GetCityNickname), GetCityNickname);
+        delegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
+        AutoFunctionCallOptions autoFunctionCallOptions = new(delegates, 10);
+
         #region Snippet:StreamingWithAutoFunctionCall
-        CollectionResult<StreamingUpdate> stream = client.CreateRunStreaming(thread.Id, agent.Id);
+        CollectionResult<StreamingUpdate> stream = client.CreateRunStreaming(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions);
         foreach (StreamingUpdate streamingUpdate in stream)
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)

@@ -21,11 +21,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// Indicates whether auto tool calls are enabled.
-        /// </summary>
-        internal bool EnableAutoToolCalls => _delegates.Count > 0;
-
-        /// <summary>
         /// Resolves the tool call by invoking the delegate associated with the function name.
         /// It casts the function arguments to the appropriate types based on the delegate's parameters.
         /// without knowing the answer.

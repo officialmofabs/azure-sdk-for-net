@@ -23,7 +23,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
 {
     private readonly Func<Response> _sendRequest;
     private readonly CancellationToken _cancellationToken;
-    private readonly ToolCallsResolver _toolCallsResolver;
+    private readonly ToolCallsResolver? _toolCallsResolver;
     private readonly Func<ThreadRun, IEnumerable<ToolOutput>, int, CollectionResult<StreamingUpdate>> _submitToolOutputsToStream;
     private readonly int _maxRetry;
     private int _currRetry;
@@ -31,8 +31,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
 
     public StreamingUpdateCollection(
         CancellationToken cancellationToken,
-        Dictionary<string, Delegate> delegates,
-        int maxRetry,
+        AutoFunctionCallOptions autoFunctionCallOptions,
         int currentRetry,
         Func<Response> sendRequest,
         Func<string, Response<ThreadRun>> cancelRun,
@@ -43,8 +42,11 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
         _cancellationToken = cancellationToken;
         _sendRequest = sendRequest;
         _submitToolOutputsToStream = submitToolOutputsToStream;
-        _toolCallsResolver = new(delegates);
-        _maxRetry = maxRetry;
+        if (autoFunctionCallOptions != null)
+        {
+            _toolCallsResolver = new(autoFunctionCallOptions.AutoFunctionCallDelegates);
+            _maxRetry = autoFunctionCallOptions.MaxRetry;
+        }
         _currRetry = currentRetry;
         _cancelRun = cancelRun;
     }
@@ -76,7 +78,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
             while (enumerator.MoveNext())
             {
                 var streamingUpdate = enumerator.Current;
-                if (streamingUpdate is RequiredActionUpdate newActionUpdate && _toolCallsResolver.EnableAutoToolCalls)
+                if (streamingUpdate is RequiredActionUpdate newActionUpdate && _toolCallsResolver != null)
                 {
                     ToolOutput toolOutput;
                     try
