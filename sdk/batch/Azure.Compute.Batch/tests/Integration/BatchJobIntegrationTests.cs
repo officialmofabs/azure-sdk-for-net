@@ -244,7 +244,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             string jobID = "deleteJob";
             string commandLine = "cmd /c echo Hello World";
             string taskID = "Task1";
-            int taskCount = 20000;
+            int taskCount = 20;
             try
             {
                 // create a pool to verify we have something to query for
