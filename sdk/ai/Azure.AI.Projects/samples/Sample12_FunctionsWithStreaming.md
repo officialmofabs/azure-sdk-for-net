@@ -75,15 +75,23 @@ ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string 
 {
     if (functionName == getUserFavoriteCityTool.Name)
     {
-        return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetUserFavoriteCity, functionArguments).ToString());
+        return new ToolOutput(toolCallId, GetUserFavoriteCity());
     }
+    using JsonDocument argumentsJson = JsonDocument.Parse(functionArguments);
     if (functionName == getCityNicknameTool.Name)
     {
-        return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetCityNickname, functionArguments).ToString());
+        string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
+        return new ToolOutput(toolCallId, GetCityNickname(locationArgument));
     }
     if (functionName == getCurrentWeatherAtLocationTool.Name)
     {
-        return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetWeatherAtLocation, functionArguments).ToString());
+        string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
+        if (argumentsJson.RootElement.TryGetProperty("unit", out JsonElement unitElement))
+        {
+            string unitArgument = unitElement.GetString();
+            return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument, unitArgument));
+        }
+        return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument));
     }
     return null;
 }

@@ -11,7 +11,7 @@ namespace Azure.AI.Projects
     /// <summary>
     /// ToolCallsResolver is used to resolve tool calls in the streaming API.
     /// </summary>
-    public class ToolCallsResolver
+    internal class ToolCallsResolver
     {
         private readonly Dictionary<string, Delegate> _delegates = new();
 
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects
         /// <param name="function"></param>
         /// <param name="functionArguments"></param>
         /// <returns></returns>
-        public static object Resolve(Delegate function, string functionArguments)
+        internal static object Resolve(Delegate function, string functionArguments)
         {
             JsonDocument argumentsJson = JsonDocument.Parse(functionArguments);
             MethodInfo method = function.Method;

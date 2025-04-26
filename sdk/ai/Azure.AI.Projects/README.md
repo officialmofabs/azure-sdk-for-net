@@ -582,15 +582,23 @@ ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string 
 {
     if (functionName == getUserFavoriteCityTool.Name)
     {
-        return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetUserFavoriteCity, functionArguments).ToString());
+        return new ToolOutput(toolCallId, GetUserFavoriteCity());
     }
+    using JsonDocument argumentsJson = JsonDocument.Parse(functionArguments);
     if (functionName == getCityNicknameTool.Name)
     {
-        return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetCityNickname, functionArguments).ToString());
+        string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
+        return new ToolOutput(toolCallId, GetCityNickname(locationArgument));
     }
     if (functionName == getCurrentWeatherAtLocationTool.Name)
     {
-        return new ToolOutput(toolCallId, ToolCallsResolver.Resolve(GetWeatherAtLocation, functionArguments).ToString());
+        string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
+        if (argumentsJson.RootElement.TryGetProperty("unit", out JsonElement unitElement))
+        {
+            string unitArgument = unitElement.GetString();
+            return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument, unitArgument));
+        }
+        return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument));
     }
     return null;
 }
@@ -644,19 +652,6 @@ while (toolOutputs.Count > 0);
 
 In addition to the manual function calls, SDK supports automatic function calling.  After creating functions and`FunctionToolDefinition` according to the last section, here is the steps:
 
-Use `EnableAutoFunctionCall` to enable the auto function call:
-```C# Snippet:StreamingWithAutoFunctionCall_EnableAutoFunctionCalls
-List<ToolOutput> toolOutputs = new();
-Dictionary<string, Delegate> delegates = new();
-delegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
-delegates.Add(nameof(GetCityNickname), GetCityNickname);
-delegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
-AIProjectClientOptions options = new();
-options.EnableAutoFunctionCalls(delegates);
-
-AgentsClient client = new(connectionString, new DefaultAzureCredential(), options);
-```
-
 When you create an agent, you can specify the function call by tools argument similar to the example of manual function calls:
 ```C# Snippet:StreamingWithAutoFunctionCall_CreateAgent
 Agent agent = client.CreateAgent(
@@ -679,9 +674,19 @@ ThreadMessage message = client.CreateMessage(
     "What's the weather like in my favorite city?");
 ```
 
-The agent will then call the function automatically when it is needed during `CreateRunStreamingAsync`:
+Setup `AutoFunctionCallOptions`:
+```C# Snippet:StreamingWithAutoFunctionCall_EnableAutoFunctionCalls
+List<ToolOutput> toolOutputs = new();
+Dictionary<string, Delegate> delegates = new();
+delegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
+delegates.Add(nameof(GetCityNickname), GetCityNickname);
+delegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
+AutoFunctionCallOptions autoFunctionCallOptions = new(delegates, 10);
+```
+
+With autoFunctionCallOptions as parameter for `CreateRunStreamingAsync`, the agent will then call the function automatically when it is needed:
 ```C# Snippet:StreamingWithAutoFunctionCallAsync
-await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {

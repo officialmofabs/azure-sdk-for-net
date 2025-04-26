@@ -69,20 +69,7 @@ private FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
         new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
 ```
 
-3. Enable auto function calls for the agent. This will allow the agent to call the functions we have defined in step 2.
-
-```C# Snippet:StreamingWithAutoFunctionCall_EnableAutoFunctionCalls
-List<ToolOutput> toolOutputs = new();
-Dictionary<string, Delegate> delegates = new();
-delegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
-delegates.Add(nameof(GetCityNickname), GetCityNickname);
-delegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
-AIProjectClientOptions options = new();
-options.EnableAutoFunctionCalls(delegates);
-
-AgentsClient client = new(connectionString, new DefaultAzureCredential(), options);
-```
-4. Create Agent with the `FunctionToolDefinitions. 
+3. Create Agent with the `FunctionToolDefinitions. 
 
 Synchronous sample:
 ```C# Snippet:StreamingWithAutoFunctionCall_CreateAgent
@@ -108,7 +95,7 @@ Agent agent = await client.CreateAgentAsync(
 );
 ```
 
-5. Create `Thread` with the message.
+4. Create `Thread` with the message.
 
 Synchronous sample:
 ```C# Snippet:StreamingWithAutoFunctionCall_CreateThreadMessage
@@ -130,11 +117,21 @@ ThreadMessage message = await client.CreateMessageAsync(
     "What's the weather like in my favorite city?");
 ```
 
-6. Create a stream that will allow us to receive updates from the agent.  The functions will be called automatically when the agent needs to call them. The `StreamingUpdate` object will contain the results of the function calls.
+5. Setup `AutoFunctionCallOptions` with the function delegates above.
+```C# Snippet:StreamingWithAutoFunctionCall_EnableAutoFunctionCalls
+List<ToolOutput> toolOutputs = new();
+Dictionary<string, Delegate> delegates = new();
+delegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
+delegates.Add(nameof(GetCityNickname), GetCityNickname);
+delegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
+AutoFunctionCallOptions autoFunctionCallOptions = new(delegates, 10);
+```
+
+6. Create a stream that will allow us to receive updates from the agent.  With `autoFunctionCallOptions` as parameter, the functions will be called automatically when the agent needs to call them. The `StreamingUpdate` object will contain the results of the function calls.
  
 Synchronous sample:
 ```C# Snippet:StreamingWithAutoFunctionCall
-CollectionResult<StreamingUpdate> stream = client.CreateRunStreaming(thread.Id, agent.Id);
+CollectionResult<StreamingUpdate> stream = client.CreateRunStreaming(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions);
 foreach (StreamingUpdate streamingUpdate in stream)
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
@@ -155,7 +152,7 @@ foreach (StreamingUpdate streamingUpdate in stream)
 
 Asynchronous sample:
 ```C# Snippet:StreamingWithAutoFunctionCallAsync
-await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {
