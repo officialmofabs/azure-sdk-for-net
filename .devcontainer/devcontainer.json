@@ -1,11 +1,56 @@
-{
-	"name": "GitHub Codespaces (Default)",
+{"name": "Mosgarage (Docker)",
+	"image": "mcr.microsoft.com/dotnet/sdk:9.0-noble",
+	"remoteUser": "mosgarage",
+	"customizations": {},
+}"features": {
+		"ghcr.io/devcontainers/features/common-utils": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/python:1": {},
+		"ghcr.io/devcontainers/features/go:1": {},
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers/features/java:1": {},
+		"ghcr.io/devcontainers/features/dotnet:1": {},
+		"ghcr.io/devcontainers/features/rust:1": {},
+		"ghcr.io/devcontainers/features/csharp:1": {},
+		"ghcr.io/devcontainers/features/cpp:1": {},
+		"ghcr.io/devcontainers/features/ruby:1": {},
+		"ghcr.io/devcontainers/features/php:1": {},
+		"ghcr.io/devcontainers/features/scala:1": {},
+		"ghcr.io/devcontainers/features/swift:1": {},
+		"ghcr.io/devcontainers/features/elixir:1": {},
+		"ghcr.io/devcontainers/features/terraform:0": {},
+		"ghcr.io/devcontainers/features/powershell:1": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:1": {},
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/azure-cli:1": {},
+		"ghcr.io/devcontainers/features/aws-cli:1": {},
+		"ghcr.io/devcontainers/features/kubernetes:1": {},
+		"ghcr.io/devcontainers/features/openshift-cli:1": {},
+		"ghcr.io/devcontainers/features/istio-cli:1": {},
+		"ghcr.io/devcontainers/features/argocd:1": {},
+		"ghcr.io/devcontainers/features/argoworkflows:1": {},
+		"ghcr.io/devcontainers/features/argocli:1": {},
+		"ghcr.io/devcontainers/features/argotoolbox:1": {},
+	},
+	"remoteUser": "mosgarage",
+	"overrideCommand": false,
+	"workspaceMount": "source=/run/media/officialmofabs/btrfs/workspaces/mosgarage-containers,target=/home/codespace/workspace,type=bind,consistency=cached",
+	"workspaceFolder": "/run/media/officialmofabs/btrfs/workspaces",
+	"mounts": "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+	"runArgs": "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined", "--privileged",
 	"settings": {
 		"terminal.integrated.profiles.linux": {
 			"bash": {
 				"path": "/bin/bash",
-				"args": []
-			}
+				"args": [],
+				"env": {
+					"PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin:/home/codespace/.local/bin"
+
+				},
+
+
+}
 		},
 		"terminal.integrated.defaultProfile.linux": "bash",
 		"go.useGoProxyToCheckForToolUpdates": false,
@@ -30,13 +75,29 @@
 			"**/target/**": true
 		}
 	},
-	"remoteUser": "codespace",
+
 	"overrideCommand": false,
 	"workspaceMount": "source=${localWorkspaceFolder},target=/home/codespace/workspace,type=bind,consistency=cached",
-	"workspaceFolder": "/home/codespace/workspace",
-	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind" ],
-	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined", "--privileged" ],
-	
+	"workspaceFolder": "/home/ecampusdev/OneDrive/Apps/code-sync/.mosgarage/mosgarage-workspace",
+	"mounts": "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+	"runArgs": "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined", "--privileged",
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"GitHub.vscode-pull-request-github",
+		"MS-vsliveshare.vsliveshare",
+		"VisualStudioExptTeam.vscodeintellicode"
+	]
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a"
+},
+{
+
+
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"GitHub.vscode-pull-request-github",
