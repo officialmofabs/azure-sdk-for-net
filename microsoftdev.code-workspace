@@ -1,12 +1,74 @@
 {
     "folders": [
         {
-            "path": "."
-        }
-    ],
+            "path": "/mnt/sda5/home/homebase-dev"
+    },
     "settings": {
         "marquee.widgets.npm-stats.packageNames": [
-            "azure-sdk-for-net"
-        ]
+            "azure-sdk-for-net",
+            "azure-sdk-for-js",
+            "azure-sdk-for-python",
+            "azure-sdk-for-go",
+            "azure-sdk-for-rust",
+            "azure-sdk-for-java",
+            "azure-sdk-for-cpp",
+            "azure-sdk-for-php",
+            "azure-sdk-for-ruby",
+            "azure-sdk-for-swift",
+            "azure-sdk-for-elixir",
+            "azure-sdk-for-terraform",
+            "azure-sdk-for-dotnet",
+            "azure-sdk-for-csharp",
+            "azure-sdk-for-scala"
     }
 }
+{
+    "workbench.iconTheme": "vscode-icons",
+    "editor.minimap.enabled": false,
+    "tabnine.experimentalAutoImports": false,
+    "Codegeex.License": "",
+    "azureLogicAppsStandard.autoRuntimeDependenciesPath": "/mnt/sda5/home/homebase-dev/.azurelogicapps/dependencies",
+    "azureLogicAppsStandard.nodeJsBinaryPath": "/mnt/sda5/home/homebase-dev/.azurelogicapps/dependencies/NodeJs/bin/node",
+    "azureLogicAppsStandard.funcCoreToolsBinaryPath": "/mnt/sda5/home/homebase-dev/.azurelogicapps/dependencies/FuncCoreTools/func",
+    "azureLogicAppsStandard.dotnetBinaryPath": "/mnt/sda5/home/homebase-dev/.azurelogicapps/dependencies/DotNetSDK/dotnet",
+    "remote.SSH.defaultExtensions": [
+        "daytonaio.daytona"
+    ],
+    "Codegeex.Privacy": true,
+    "azureLogicAppsStandard.parameterizeConnectionsInProjectLoad": true,
+    "git-autoconfig.configList": [
+        {
+            "user.email": "support@igedevteam.onmicrosoft.com",
+            "user.name": "Projectoperations"
+        },
+        {
+            "user.email": "webmaster@ecampuslearning.com"
+            "user.name": "ecampusdev"
+        },
+        {
+            "user.email": "officialmofabs@outlook.com",
+            "user.name": "Moses Fabiyi"
+        }
+    ],
+    "remote.SSH.remotePlatform": {
+        "*.gitpod.local": "linux",
+        "*.gitpod.remote": "linux"
+    },
+    "codium.enterprise.onPremService.enable": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "yaml.schemas": {
+        "/home/officialmofabs/.vscode-insiders/extensions/continue.continue-1.1.49-linux-x64/config-yaml-schema.json": [
+            ".continue/**/*.yaml"
+        ]
+    },
+    "chat.instructionsFilesLocations": {
+        ".github/instructions": true,
+        "/home/officialmofabs/.config/Code - Insiders/User/globalStorage/quantum.qsharp-lang-vscode/chat-instructions": true
+    },
+    "docker.extension.enableComposeLanguageServer": false
+}
+        }
+        {            "path": "/media/home/officialmofabs/remotedrive/home/homebase-dev/ws-mosgarage-microsoftdev.git/AzureFunctionsSamples"
+        }
+
+     //   /media/home/officialmofabs/remotedrive/home/homebase-dev/ws-mosgarage-microsoftdev.git/AzureFunctionsSamples

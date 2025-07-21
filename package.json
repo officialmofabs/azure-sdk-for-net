@@ -2,6 +2,7 @@
   "name": "mosgarage-microsoftdev",
   "version": "1.0.0",
   "dependencies": {
+    "@microsoft/clarity": "^1.0.0",
     "autorest": "^3.7.1"
   }
 }

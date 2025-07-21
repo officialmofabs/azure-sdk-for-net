@@ -1,8 +1,23 @@
-{"name": "Mosgarage (Docker)",
+{"name": "Mosgarage-MicrosoftDev",
 	"image": "mcr.microsoft.com/dotnet/sdk:9.0-noble",
 	"remoteUser": "mosgarage",
-	"customizations": {},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.vscode-pull-request-github",
+				"ms-dotnettools.vscode-dotnet-runtime",
+				"tintoy.msbuild-project-tools",
+				"sterin.msbuild-tools",
+				"Codeium.codeium",
+				"GitHub.vscode-pull-request-github",
+				"MS-vsliveshare.vsliveshare",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"ms-azuretools.vscode-azureterraform"
+			]
+		}
+	},
 }"features": {
+	    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
 		"ghcr.io/devcontainers/features/common-utils": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
 		"ghcr.io/devcontainers/features/python:1": {},
@@ -32,26 +47,7 @@
 		"ghcr.io/devcontainers/features/argoworkflows:1": {},
 		"ghcr.io/devcontainers/features/argocli:1": {},
 		"ghcr.io/devcontainers/features/argotoolbox:1": {},
-	},
-	"remoteUser": "mosgarage",
-	"overrideCommand": false,
-	"workspaceMount": "source=/run/media/officialmofabs/btrfs/workspaces/mosgarage-containers,target=/home/codespace/workspace,type=bind,consistency=cached",
-	"workspaceFolder": "/run/media/officialmofabs/btrfs/workspaces",
-	"mounts": "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
-	"runArgs": "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined", "--privileged",
-	"settings": {
-		"terminal.integrated.profiles.linux": {
-			"bash": {
-				"path": "/bin/bash",
-				"args": [],
-				"env": {
-					"PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin:/home/codespace/.local/bin"
-
-				},
-
-
-}
-		},
+} settings": {
 		"terminal.integrated.defaultProfile.linux": "bash",
 		"go.useGoProxyToCheckForToolUpdates": false,
 		"go.useLanguageServer": true,
@@ -77,16 +73,11 @@
 	},
 
 	"overrideCommand": false,
-	"workspaceMount": "source=${localWorkspaceFolder},target=/home/codespace/workspace,type=bind,consistency=cached",
-	"workspaceFolder": "/home/ecampusdev/OneDrive/Apps/code-sync/.mosgarage/mosgarage-workspace",
+	"workspaceMount": "source=/media/home/officialmofabs/remotedrive/home/homebase-dev/,target=/home/codespace/workspace,type=bind,consistency=cached",
+	"workspaceFolder": "/media/home/officialmofabs/remotedrive/home/homebase-dev/",
 	"mounts": "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
 	"runArgs": "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined", "--privileged",
 
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"GitHub.vscode-pull-request-github",
-		"MS-vsliveshare.vsliveshare",
-		"VisualStudioExptTeam.vscodeintellicode"
 	]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -97,13 +88,6 @@
 },
 {
 
-
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"GitHub.vscode-pull-request-github",
-		"MS-vsliveshare.vsliveshare",
-		"VisualStudioExptTeam.vscodeintellicode"
-	]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

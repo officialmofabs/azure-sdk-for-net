@@ -6,5 +6,5 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <Import Project="$(RepoEngPath)\Directory.Build.Common.targets" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
+  <Import Project="/mnt/sda5/home/homebase-dev/ws-mosgarage-microsoftdev.git/Directory.Build.Common.targets" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
 </Project>
