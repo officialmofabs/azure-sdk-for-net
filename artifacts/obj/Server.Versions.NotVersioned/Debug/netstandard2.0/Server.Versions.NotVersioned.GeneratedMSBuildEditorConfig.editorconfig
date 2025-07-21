@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = Server.Versions.NotVersioned
+build_property.ProjectDir = /run/media/officialmofabs/btrfs/workspaces/mosgarage-microsoftdev/eng/packages/http-client-csharp/generator/TestProjects/Spector/http/server/versions/not-versioned/src/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

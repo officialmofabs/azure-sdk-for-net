@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = Azure.IoT.TimeSeriesInsights
+build_property.ProjectDir = /run/media/officialmofabs/btrfs/workspaces/mosgarage-microsoftdev/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = Azure.Health.Insights.CancerProfiling
+build_property.ProjectDir = /run/media/officialmofabs/btrfs/workspaces/mosgarage-microsoftdev/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/src/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = Azure.ResourceManager.KeyVault
+build_property.ProjectDir = /run/media/officialmofabs/btrfs/workspaces/mosgarage-microsoftdev/sdk/keyvault/Azure.ResourceManager.KeyVault/src/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

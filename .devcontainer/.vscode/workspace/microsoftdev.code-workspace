@@ -1,0 +1,12 @@
+{
+    "folders": [
+        {
+            "path": "../../.."
+        }
+    ],
+    "settings": {
+        "marquee.widgets.npm-stats.packageNames": [
+            "azure-sdk-for-net"
+        ]
+    }
+}

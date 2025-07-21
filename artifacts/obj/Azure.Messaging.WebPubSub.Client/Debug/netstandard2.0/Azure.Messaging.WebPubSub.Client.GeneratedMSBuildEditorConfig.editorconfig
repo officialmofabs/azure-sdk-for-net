@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = Azure.Messaging.WebPubSub.Client
+build_property.ProjectDir = /run/media/officialmofabs/btrfs/workspaces/mosgarage-microsoftdev/sdk/webpubsub/Azure.Messaging.WebPubSub.Client/src/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

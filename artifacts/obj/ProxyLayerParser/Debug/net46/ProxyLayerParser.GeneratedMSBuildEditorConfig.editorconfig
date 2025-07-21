@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = ProxyLayerParser
+build_property.ProjectDir = /run/media/officialmofabs/btrfs/workspaces/mosgarage-microsoftdev/sdk/batch/Microsoft.Azure.Batch/tools/RoslynParser/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 
